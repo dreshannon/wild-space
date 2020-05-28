@@ -1,18 +1,49 @@
 module.exports = {
   root: true,
-  env: {
-    node: true
-  },
-  'extends': [
-    'plugin:vue/essential',
+  parser: 'vue-eslint-parser',
+  extends: [
     'eslint:recommended',
-    '@vue/typescript/recommended'
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:vue/recommended',
+    '@vue/typescript',
+    'google',
+  ],
+  plugins: [
+    '@typescript-eslint',
+    'vue',
   ],
   parserOptions: {
-    ecmaVersion: 2020
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 2018,
+    sourceType: 'module',
+    project: './tsconfig.json',
+    extraFileExtensions: ['.vue'],
+  },
+  env: {
+    node: true,
+    es6: true,
   },
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-  }
-}
+    'require-jsdoc': 'off',
+    'max-len': [2, 120, 4],
+    'no-debugger': 'error',
+    'no-alert': 'error',
+    'indent': ['error', 2],
+    'dot-location': ['error', 'property'],
+    'newline-per-chained-call': ['error', { 'ignoreChainWithDepth': 2 }],
+    'no-extra-semi': 'error',
+    'complexity': ['error', 10],
+    'no-cond-assign': 'error',
+    'curly': ['error', 'all'],
+    'no-multi-spaces': 'error',
+    'space-in-parens': ['error', 'never'],
+    'object-curly-spacing': ['error', 'never'],
+    'new-cap': 'off',
+    'no-unused-vars': 'warn',
+    'no-console': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off'
+  },
+};
