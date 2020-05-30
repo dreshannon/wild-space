@@ -1,9 +1,19 @@
 <template>
   <v-row>
-    <v-col cols="4">
+    <v-col
+      cols="4"
+      xl="4"
+      lg="5"
+      sm="6"
+    >
       <campaign-tracker />
     </v-col>
-    <v-col cols="8">
+    <v-col
+      cols="8"
+      xl="8"
+      lg="7"
+      sm="6"
+    >
       <character-sheet :character="character" />
     </v-col>
   </v-row>

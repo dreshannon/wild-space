@@ -7,7 +7,11 @@
       </v-card-subtitle>
     </v-card>
     <v-row>
-      <v-col cols="2">
+      <v-col
+        cols="12"
+        lg="3"
+        sm="5"
+      >
         <v-card flat>
           <v-card-title>Strength</v-card-title>
           <v-card-text>{{ character.traits.strength }}</v-card-text>
@@ -33,12 +37,17 @@
           <v-card-text>{{ character.traits.engineering }}</v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="10">
+      <v-col
+        cols="12"
+        lg="9"
+        sm="7"
+      >
         <p class="d-flex">
           Health:
           <v-text-field
             v-model="character.currentHealth"
             :suffix="'/' + character.health + 'hp'"
+            @change="setCharacterCurrentHealth()"
           />
         </p>
         <v-card flat>
@@ -90,10 +99,16 @@
 <script lang="ts">
 import {Component, Vue, Prop} from 'vue-property-decorator';
 import {Character} from '../types';
+import CookieService from '../services/cookie-service';
 
 @Component
 export default class CharacterSheet extends Vue {
   @Prop() character!: Character;
+
+  setCharacterCurrentHealth() {
+    this.$store.commit('setCharacterCurrentHealth', this.character.currentHealth);
+    CookieService.setCharacterCookie(this.character);
+  }
 }
 </script>
 
