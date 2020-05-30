@@ -1,11 +1,15 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="4">
-        <p>Race: {{ character.race }}</p>
+      <v-col cols="2">
+        <p class="text-left">
+          Race: {{ character.race }}
+        </p>
       </v-col>
-      <v-col cols="8">
-        <p>Name: {{ character.name }}</p>
+      <v-col cols="10">
+        <p class="text-left">
+          Name: {{ character.name }}
+        </p>
       </v-col>
     </v-row>
     <v-row>
@@ -50,8 +54,12 @@
             :key="'skill-' + index"
           >
             <v-list-item-content>
-              <v-list-item-title class="text-left">{{ skill.name }}</v-list-item-title>
-              <v-list-item-subtitle class="text-left">{{ skill.description }}</v-list-item-subtitle>
+              <v-list-item-title class="text-left">
+                {{ skill.name }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="text-left">
+                {{ skill.description }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-card>
@@ -62,7 +70,9 @@
             :key="'language-' + index"
           >
             <v-list-item-content>
-              <v-list-item-title class="text-left">{{ language }}</v-list-item-title>
+              <v-list-item-title class="text-left">
+                {{ language }}
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-card>
@@ -70,11 +80,15 @@
     </v-row>
     <v-card flat>
       <v-card-title>Personality</v-card-title>
-      <v-card-text class="text-left">{{ character.personality }}</v-card-text>
+      <v-card-text class="text-left">
+        {{ character.personality }}
+      </v-card-text>
     </v-card>
     <v-card flat>
       <v-card-title>Background</v-card-title>
-      <v-card-text class="text-left">{{ character.background }}</v-card-text>
+      <v-card-text class="text-left">
+        {{ character.background }}
+      </v-card-text>
     </v-card>
   </div>
 </template>
