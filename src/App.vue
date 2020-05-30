@@ -10,7 +10,9 @@
       </router-link>
     </v-app-bar>
     <v-content>
-      <router-view id="content" />
+      <v-container>
+        <router-view id="content" />
+      </v-container>
     </v-content>
   </v-app>
 </template>

@@ -4,6 +4,7 @@ export interface Campaign {
 
 export interface Character {
   name: string;
+  race: string;
   traits: {
     strength: number;
     dexterity: number;
