@@ -1,5 +1,11 @@
 export interface Campaign {
   name: string;
+  events: Event[];
+}
+
+export interface Event {
+  title: string;
+  description: string;
 }
 
 export interface Character {
