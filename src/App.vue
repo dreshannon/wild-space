@@ -38,4 +38,8 @@
     }
   }
 }
+
+.description {
+  white-space: pre-line;
+}
 </style>

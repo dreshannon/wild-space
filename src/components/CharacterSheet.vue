@@ -83,13 +83,13 @@
     </v-row>
     <v-card flat>
       <v-card-title>Personality</v-card-title>
-      <v-card-text class="text-left">
+      <v-card-text class="text-left description">
         {{ character.personality }}
       </v-card-text>
     </v-card>
     <v-card flat>
       <v-card-title>Background</v-card-title>
-      <v-card-text class="text-left">
+      <v-card-text class="text-left description">
         {{ character.background }}
       </v-card-text>
     </v-card>

@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import {Character} from '@/types';
+import {Character, Campaign} from '@/types';
 
 function setCharacterCookie(character: Character) {
   Cookies.set('character', JSON.stringify(character));
@@ -33,7 +33,26 @@ function getCharacterCookie(): Character {
   }
 }
 
+function setCampaignCookie(campaign: Campaign) {
+  Cookies.set('campaign', JSON.stringify(campaign));
+}
+
+function getCampaignCookie(): Campaign {
+  const campaign = Cookies.get('campaign');
+
+  if (campaign) {
+    return JSON.parse(campaign);
+  } else {
+    return {
+      name: 'Wild Space',
+      events: [],
+    };
+  }
+}
+
 export default {
   setCharacterCookie,
   getCharacterCookie,
+  setCampaignCookie,
+  getCampaignCookie,
 };

@@ -6,7 +6,7 @@
       lg="5"
       sm="6"
     >
-      <campaign-tracker />
+      <campaign-tracker :campaign="campaign" />
     </v-col>
     <v-col
       cols="8"
@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import {Character} from '../types';
+import {Character, Campaign} from '../types';
 import CampaignTracker from '../components/CampaignTracker.vue';
 import CharacterSheet from '../components/CharacterSheet.vue';
 
@@ -32,10 +32,12 @@ import CharacterSheet from '../components/CharacterSheet.vue';
   },
 })
 export default class Home extends Vue {
+  campaign: Campaign | undefined = undefined;
   character: Character | undefined = undefined;
 
   created() {
     this.character = this.$store.state.character;
+    this.campaign = this.$store.state.campaign;
   }
 }
 </script>

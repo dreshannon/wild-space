@@ -1,14 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import CookieService from '../services/cookie-service';
+import {Event} from '@/types';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    campaign: CookieService.getCampaignCookie(),
     character: CookieService.getCharacterCookie(),
   },
   mutations: {
+    setCampaignEvents(state, events: Event[]) {
+      state.campaign.events = events;
+    },
     setCharacterRace(state, race: string) {
       state.character.race = race;
     },
