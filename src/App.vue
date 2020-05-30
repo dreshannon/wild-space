@@ -6,7 +6,7 @@
       <router-link
         to="/"
       >
-        <v-toolbar-title>Home</v-toolbar-title>
+        <v-toolbar-title>Wild Space</v-toolbar-title>
       </router-link>
     </v-app-bar>
     <v-content>

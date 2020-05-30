@@ -1,17 +1,11 @@
 <template>
   <div>
-    <v-row>
-      <v-col cols="2">
-        <p class="text-left">
-          Race: {{ character.race }}
-        </p>
-      </v-col>
-      <v-col cols="10">
-        <p class="text-left">
-          Name: {{ character.name }}
-        </p>
-      </v-col>
-    </v-row>
+    <v-card flat>
+      <v-card-title>{{ character.name }}</v-card-title>
+      <v-card-subtitle class="text-left">
+        {{ character.race }}
+      </v-card-subtitle>
+    </v-card>
     <v-row>
       <v-col cols="2">
         <v-card flat>
