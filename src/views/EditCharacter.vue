@@ -296,6 +296,7 @@ export default class EditCharacter extends Vue {
   save() {
     if (this.character) {
       CookieService.setCharacterCookie(this.character);
+      this.$router.push('/');
     }
   }
 }

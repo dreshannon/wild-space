@@ -1,7 +1,12 @@
 <template>
   <div>
     <v-card flat>
-      <v-card-title>{{ character.name }}</v-card-title>
+      <v-card-title class="d-flex justify-space-between">
+        {{ character.name }}
+        <router-link to="/character">
+          <v-icon>mdi-pencil-outline</v-icon>
+        </router-link>
+      </v-card-title>
       <v-card-subtitle class="text-left">
         {{ character.race }}
       </v-card-subtitle>
