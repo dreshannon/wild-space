@@ -203,7 +203,6 @@ export default class CharacterSheet extends Vue {
     for (let i = 0; i < this.activeTrait.value; i++) {
       this.rolls.push(Math.floor(Math.random() * 6) + 1);
     }
-    console.log(`#rollTraitCheck:\nrolls: ${this.rolls}`);
   }
 
   setActiveSkillAndShowRollMenu(skill: Skill) {
