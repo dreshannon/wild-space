@@ -18,6 +18,7 @@ export interface Character {
     culture: number;
     biology: number;
     engineering: number;
+    [key: string]: number;
   };
   skills: Skill[];
   health: number;
@@ -31,4 +32,5 @@ export interface Character {
 export interface Skill {
   name: string;
   description: string;
+  trait: string;
 }

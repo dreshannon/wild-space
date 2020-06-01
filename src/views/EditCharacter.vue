@@ -79,7 +79,7 @@
         >
           Skills
         </h2>
-        <v-card>
+        <v-card flat>
           <v-list-item
             v-for="(skill, index) in character.skills"
             :key="'skill-' + index"
@@ -94,7 +94,12 @@
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </v-list-item-title>
-              <v-list-item-subtitle>{{ skill.description }}</v-list-item-subtitle>
+              <v-list-item-subtitle class="text-left">
+                {{ skill.description }}
+              </v-list-item-subtitle>
+              <v-list-item-subtitle class="text-left">
+                {{ skill.trait }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
@@ -111,6 +116,13 @@
                   v-model="newSkill.description"
                   label="Description"
                   @keyup.enter="addSkillToCharacter()"
+                />
+              </v-list-item-subtitle>
+              <v-list-item-subtitle>
+                <v-select
+                  v-model="newSkill.trait"
+                  :items="Object.keys(character.traits)"
+                  label="Trait"
                 />
               </v-list-item-subtitle>
             </v-list-item-content>
@@ -203,6 +215,7 @@ export default class EditCharacter extends Vue {
   newSkill: Skill = {
     name: '',
     description: '',
+    trait: '',
   };
   newLanguage = '';
 
@@ -215,10 +228,12 @@ export default class EditCharacter extends Vue {
       this.character.skills.push({
         name: this.newSkill.name,
         description: this.newSkill.description,
+        trait: this.newSkill.trait,
       });
       this.setCharacterSkills();
       this.newSkill.name = '';
       this.newSkill.description = '';
+      this.newSkill.trait = '';
     }
   }
   removeSkillFromCharacter(index: number) {

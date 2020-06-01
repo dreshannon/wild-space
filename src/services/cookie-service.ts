@@ -50,9 +50,25 @@ function getCampaignCookie(): Campaign {
   }
 }
 
+function setCampaignNotesCookie(notes: string) {
+  Cookies.set('notes', JSON.stringify(notes));
+}
+
+function getCampaignNotes() {
+  const notes = Cookies.get('notes');
+
+  if (notes) {
+    return JSON.parse(notes);
+  } else {
+    return '';
+  }
+}
+
 export default {
   setCharacterCookie,
   getCharacterCookie,
   setCampaignCookie,
   getCampaignCookie,
+  setCampaignNotesCookie,
+  getCampaignNotes,
 };

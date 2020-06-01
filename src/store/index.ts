@@ -9,8 +9,12 @@ export default new Vuex.Store({
   state: {
     campaign: CookieService.getCampaignCookie(),
     character: CookieService.getCharacterCookie(),
+    notes: CookieService.getCampaignNotes(),
   },
   mutations: {
+    setCampaignNotes(state, notes: string) {
+      state.notes = notes;
+    },
     setCampaignEvents(state, events: Event[]) {
       state.campaign.events = events;
     },

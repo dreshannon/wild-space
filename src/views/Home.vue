@@ -16,6 +16,9 @@
     >
       <character-sheet :character="character" />
     </v-col>
+    <v-col>
+      <campaign-notes />
+    </v-col>
   </v-row>
 </template>
 
@@ -24,11 +27,13 @@ import {Component, Vue} from 'vue-property-decorator';
 import {Character, Campaign} from '../types';
 import CampaignTracker from '../components/CampaignTracker.vue';
 import CharacterSheet from '../components/CharacterSheet.vue';
+import CampaignNotes from '../components/CampaignNotes.vue';
 
 @Component({
   components: {
     CampaignTracker,
     CharacterSheet,
+    CampaignNotes,
   },
 })
 export default class Home extends Vue {
