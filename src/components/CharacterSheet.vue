@@ -17,31 +17,65 @@
         lg="3"
         sm="5"
       >
-        <v-card flat>
+        <v-card
+          class="character-sheet-trait"
+          flat
+          @click="activateRollDialog('Strength', character.traits.strength)"
+        >
           <v-card-title>Strength</v-card-title>
           <v-card-text class="text-left">
             {{ character.traits.strength }}
           </v-card-text>
         </v-card>
-        <v-card flat>
+        <v-card
+          class="character-sheet-trait"
+          flat
+          @click="activateRollDialog('Dexterity', character.traits.dexterity)"
+        >
           <v-card-title>Dexterity</v-card-title>
-          <v-card-text>{{ character.traits.dexterity }}</v-card-text>
+          <v-card-text class="text-left">
+            {{ character.traits.dexterity }}
+          </v-card-text>
         </v-card>
-        <v-card flat>
+        <v-card
+          class="character-sheet-trait"
+          flat
+          @click="activateRollDialog('Relations', character.traits.relations)"
+        >
           <v-card-title>Relations</v-card-title>
-          <v-card-text>{{ character.traits.relations }}</v-card-text>
+          <v-card-text class="text-left">
+            {{ character.traits.relations }}
+          </v-card-text>
         </v-card>
-        <v-card flat>
+        <v-card
+          class="character-sheet-trait"
+          flat
+          @click="activateRollDialog('Culture', character.traits.culture)"
+        >
           <v-card-title>Culture</v-card-title>
-          <v-card-text>{{ character.traits.culture }}</v-card-text>
+          <v-card-text class="text-left">
+            {{ character.traits.culture }}
+          </v-card-text>
         </v-card>
-        <v-card flat>
+        <v-card
+          class="character-sheet-trait"
+          flat
+          @click="activateRollDialog('Biology', character.traits.biology)"
+        >
           <v-card-title>Biology</v-card-title>
-          <v-card-text>{{ character.traits.biology }}</v-card-text>
+          <v-card-text class="text-left">
+            {{ character.traits.biology }}
+          </v-card-text>
         </v-card>
-        <v-card flat>
+        <v-card
+          class="character-sheet-trait"
+          flat
+          @click="activateRollDialog('Engineering', character.traits.engineering)"
+        >
           <v-card-title>Engineering</v-card-title>
-          <v-card-text>{{ character.traits.engineering }}</v-card-text>
+          <v-card-text class="text-left">
+            {{ character.traits.engineering }}
+          </v-card-text>
         </v-card>
       </v-col>
       <v-col
@@ -62,8 +96,6 @@
           <v-list-item
             v-for="(skill, index) in character.skills"
             :key="'skill-' + index"
-            class="character-sheet-skill"
-            @click="setActiveSkillAndShowRollMenu(skill)"
           >
             <v-list-item-content>
               <v-list-item-title class="text-left">
@@ -105,41 +137,28 @@
         {{ character.background }}
       </v-card-text>
     </v-card>
-    <v-bottom-sheet v-model="showRollDialog">
-      <v-sheet class="pa-5">
-        <v-row>
-          <v-col cols="6">
-            <v-card
-              flat
-            >
-              <v-card-title>{{ activeSkill.name }}</v-card-title>
-              <v-card-subtitle class="text-left text-capitalize">
-                {{ activeSkill.trait }}
-              </v-card-subtitle>
-              <v-card-text class="text-left">
-                {{ activeSkill.description }}
-              </v-card-text>
-            </v-card>
-          </v-col>
-          <v-col cols="6">
-            <div>
-              <v-btn
-                block
-                @click="rollSkillCheck(activeSkill)"
-              >
-                Roll
-              </v-btn>
-              <v-icon
-                v-for="(roll, index) in rolls"
-                :key="activeSkill.name + '-roll-' + roll + index"
-              >
-                mdi-dice-{{ roll }}
-              </v-icon>
-            </div>
-          </v-col>
-        </v-row>
-      </v-sheet>
-    </v-bottom-sheet>
+    <v-dialog
+      v-model="showRollDialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title>{{ activeTrait.trait }}</v-card-title>
+        <v-card-text>
+          <v-icon
+            v-for="(roll, index) in rolls"
+            :key="activeTrait.name + '-roll-' + roll + index"
+          >
+            mdi-dice-{{ roll }}
+          </v-icon>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn @click="rollTraitCheck()">
+            Roll
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -158,10 +177,33 @@ export default class CharacterSheet extends Vue {
   };
   showRollDialog = false;
   rolls: number[] = [];
+  activeTrait = {
+    trait: '',
+    value: 0,
+  };
 
   setCharacterCurrentHealth() {
     this.$store.commit('setCharacterCurrentHealth', this.character.currentHealth);
     CookieService.setCharacterCookie(this.character);
+  }
+
+  activateRollDialog(trait: string, value: number) {
+    this.activeTrait = {
+      trait,
+      value,
+    };
+    this.rolls = [];
+
+    this.showRollDialog = true;
+  }
+
+  rollTraitCheck() {
+    this.rolls = [];
+
+    for (let i = 0; i < this.activeTrait.value; i++) {
+      this.rolls.push(Math.floor(Math.random() * 6) + 1);
+    }
+    console.log(`#rollTraitCheck:\nrolls: ${this.rolls}`);
   }
 
   setActiveSkillAndShowRollMenu(skill: Skill) {
@@ -185,7 +227,7 @@ export default class CharacterSheet extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.character-sheet-skill {
+.character-sheet-trait {
   &:hover {
     background: #eaeaea;
     cursor: pointer;
