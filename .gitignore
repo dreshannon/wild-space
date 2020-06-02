@@ -4,7 +4,6 @@ node_modules
 /coverage
 /.firebase
 *.cache
-/src/firebaseConfig.ts
 
 # local env files
 .env.local
@@ -25,3 +24,4 @@ firebase-debug.log
 *.sln
 *.sw?
 *.xcf
+src/firebaseConfig.ts
