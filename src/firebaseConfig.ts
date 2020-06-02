@@ -19,11 +19,11 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 const currentUser = auth.currentUser;
 
-// date issue fix according to firebase
-const settings = {
-  timestampsInSnapshots: true,
-};
-db.settings(settings);
+// date issue fix according to firebase - NO LONGER NECESSARY
+// const settings = {
+//   timestampsInSnapshots: true,
+// };
+// db.settings(settings);
 
 // firebase collections
 const usersCollection = db.collection('users');
