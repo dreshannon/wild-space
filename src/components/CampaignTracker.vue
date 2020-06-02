@@ -29,13 +29,15 @@
     </v-timeline>
     <v-bottom-sheet v-model="showNewEventForm">
       <template v-slot:activator="{ on }">
-        <v-btn
-          fab
-          color="pink"
-          v-on="on"
-        >
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
+        <div class="text-center">
+          <v-btn
+            fab
+            color="pink"
+            v-on="on"
+          >
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </div>
       </template>
       <v-sheet class="pa-5">
         <v-form @submit.prevent="addEventToCampaign()">
