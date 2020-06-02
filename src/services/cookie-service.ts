@@ -26,6 +26,7 @@ function getCharacterCookie(): Character {
       health: 0,
       currentHealth: 0,
       languages: [],
+      inventory: '',
       background: '',
       personality: '',
       picture: '',

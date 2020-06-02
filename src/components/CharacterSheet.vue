@@ -93,22 +93,21 @@
         </p>
         <v-card flat>
           <v-card-title>Skills</v-card-title>
-          <v-list-item
+          <v-card
             v-for="(skill, index) in character.skills"
             :key="'skill-' + index"
+            flat
           >
-            <v-list-item-content>
-              <v-list-item-title class="text-left">
-                {{ skill.name }}
-              </v-list-item-title>
-              <v-list-item-subtitle class="text-left text-capitalize">
-                {{ skill.trait }}
-              </v-list-item-subtitle>
-              <v-list-item-subtitle class="text-left">
-                {{ skill.description }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
+            <v-card-title>
+              {{ skill.name }}
+            </v-card-title>
+            <v-card-subtitle class="text-left">
+              {{ skill.trait }}
+            </v-card-subtitle>
+            <v-card-text class="text-left">
+              {{ skill.description }}
+            </v-card-text>
+          </v-card>
         </v-card>
         <v-card flat>
           <v-card-title>Languages</v-card-title>
@@ -125,6 +124,12 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-card flat>
+      <v-card-title>Inventory</v-card-title>
+      <v-card-text class="text-left description">
+        {{ character.inventory }}
+      </v-card-text>
+    </v-card>
     <v-card flat>
       <v-card-title>Personality</v-card-title>
       <v-card-text class="text-left description">
@@ -231,6 +236,10 @@ export default class CharacterSheet extends Vue {
     background: #eaeaea;
     cursor: pointer;
     transition: ease .3s all;
+  }
+
+  .v-card__text {
+    font-size: 2em;
   }
 }
 

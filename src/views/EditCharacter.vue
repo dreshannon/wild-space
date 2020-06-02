@@ -74,12 +74,10 @@
           label="Health"
           @change="setCharacterHealth()"
         />
-        <h2
-          class="text-left"
-        >
-          Skills
-        </h2>
         <v-card flat>
+          <v-card-title>
+            <h2>Skills</h2>
+          </v-card-title>
           <v-list-item
             v-for="(skill, index) in character.skills"
             :key="'skill-' + index"
@@ -102,7 +100,7 @@
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item>
+          <v-list-item three-line>
             <v-list-item-content>
               <v-list-item-title>
                 <v-text-field
@@ -134,12 +132,10 @@
             </v-btn>
           </v-card-actions>
         </v-card>
-        <h2
-          class="text-left"
-        >
-          Languages
-        </h2>
-        <v-card>
+        <v-card flat>
+          <v-card-title>
+            <h2>Languages</h2>
+          </v-card-title>
           <v-list-item
             v-for="(language, index) in character.languages"
             :key="'language-' + index"
@@ -174,6 +170,15 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-textarea
+          v-model="character.inventory"
+          label="Inventory"
+          @change="setCharacterInventory()"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -293,6 +298,12 @@ export default class EditCharacter extends Vue {
   setCharacterLanguages() {
     if (this.character) {
       this.$store.commit('setCharacterLanguages', this.character.languages);
+    }
+  }
+
+  setCharacterInventory() {
+    if (this.character) {
+      this.$store.commit('setCharacterInventory', this.character.inventory);
     }
   }
 

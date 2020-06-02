@@ -24,6 +24,7 @@ export interface Character {
   health: number;
   currentHealth: number;
   languages: string[];
+  inventory: string;
   background: string;
   personality: string;
   picture: string;

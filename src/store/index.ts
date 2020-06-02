@@ -12,6 +12,9 @@ export default new Vuex.Store({
     notes: CookieService.getCampaignNotes(),
   },
   mutations: {
+    setCharacterInventory(state, inventory: string) {
+      state.character.inventory = inventory;
+    },
     setCampaignNotes(state, notes: string) {
       state.notes = notes;
     },
