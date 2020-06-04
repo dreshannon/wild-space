@@ -6,7 +6,7 @@
       lg="5"
       sm="6"
     >
-      <campaign-tracker :campaign="campaign" />
+      <campaign-tracker />
     </v-col>
     <v-col
       cols="8"
@@ -37,12 +37,35 @@ import CampaignNotes from '../components/CampaignNotes.vue';
   },
 })
 export default class Home extends Vue {
-  campaign: Campaign | undefined = undefined;
-  character: Character | undefined = undefined;
+  campaign: Campaign = {
+    name: '',
+    events: [],
+    notes: '',
+  };
+  character: Character = {
+    name: '',
+    race: '',
+    traits: {
+      strength: 0,
+      dexterity: 0,
+      relations: 0,
+      culture: 0,
+      biology: 0,
+      engineering: 0,
+    },
+    skills: [],
+    health: 0,
+    currentHealth: 0,
+    languages: [],
+    inventory: '',
+    background: '',
+    personality: '',
+    picture: '',
+  };
 
-  created() {
-    this.character = this.$store.state.character;
+  async mounted() {
     this.campaign = this.$store.state.campaign;
+    this.character = this.$store.state.character;
   }
 }
 </script>

@@ -2,24 +2,21 @@
   <v-card flat>
     <v-card-title>Campaign Tracker</v-card-title>
     <v-card-subtitle class="text-left">
-      Click the plus button to add a campaign event to the timeline. Click an event to edit.
+      Click the plus button to add a campaign event to the timeline. <strong>Click an event to edit</strong>.
     </v-card-subtitle>
-    <v-timeline align-top>
+    <v-timeline
+      v-if="campaign.events"
+      align-top
+    >
       <v-timeline-item
         v-for="(event, index) in campaign.events"
-        :key="'event-' + index"
+        :key="'event-' + index + '-' + event.title"
       >
         <v-card
-          @click="editEvent(event)"
+          @click="editEvent(event, index)"
         >
-          <v-card-title class="d-flex justify-space-between">
+          <v-card-title>
             {{ event.title }}
-            <v-btn
-              icon
-              @click="deleteEventFromCampaign(index)"
-            >
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
           </v-card-title>
           <v-card-text class="text-left description">
             {{ event.description }}
@@ -40,7 +37,7 @@
         </div>
       </template>
       <v-sheet class="pa-5">
-        <v-form @submit.prevent="addEventToCampaign()">
+        <v-form @submit.prevent="addEvent()">
           <v-text-field
             v-model="newEvent.title"
             label="Title"
@@ -50,7 +47,7 @@
             label="Description"
           />
           <div class="d-flex justify-end">
-            <v-btn @click="addEventToCampaign()">
+            <v-btn @click="addEvent()">
               Add
             </v-btn>
           </div>
@@ -71,7 +68,10 @@
             v-model="activeEvent.description"
             label="Description"
           />
-          <div class="d-flex justify-end">
+          <div class="d-flex justify-space-between">
+            <v-btn @click="deleteEvent()">
+              Delete
+            </v-btn>
             <v-btn @click="saveEditedEvent()">
               Save
             </v-btn>
@@ -83,13 +83,15 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import {Campaign, Event} from '../types';
-import CookieService from '../services/cookie-service';
+import fb from '../firebaseConfig';
 
 @Component
 export default class CampaignTracker extends Vue {
-  @Prop() campaign!: Campaign;
+  get campaign(): Campaign {
+    return this.$store.state.campaign;
+  }
 
   showNewEventForm = false;
   showEditEventForm = false;
@@ -102,36 +104,58 @@ export default class CampaignTracker extends Vue {
     title: '',
     description: '',
   };
+  activeEventIndex: number | undefined = undefined;
 
-  editEvent(event: Event) {
+  editEvent(event: Event, index: number) {
     this.activeEvent = event;
     this.showEditEventForm = true;
+    this.activeEventIndex = index;
   }
 
   saveEditedEvent() {
-    this.$store.commit('setCampaignEvents', this.campaign.events);
-    CookieService.setCampaignCookie(this.campaign);
+    const campaign = this.campaign;
+    fb.campaignsCollection.doc(this.$store.state.currentUser.uid).set({
+      name: 'Wild Space',
+      events: campaign.events,
+      notes: campaign.notes,
+    });
     this.showEditEventForm = false;
   }
 
-  addEventToCampaign() {
+  addEvent() {
     if (this.newEvent.title) {
-      this.campaign.events.push({
+      const campaign = this.campaign;
+      campaign.events.push({
         title: this.newEvent.title,
         description: this.newEvent.description,
       });
-      this.$store.commit('setCampaignEvents', this.campaign.events);
+      fb.campaignsCollection.doc(this.$store.state.currentUser.uid).set({
+        name: 'Wild Space',
+        events: campaign.events,
+        notes: campaign.notes,
+      });
       this.newEvent.title = '';
       this.newEvent.description = '';
       this.showNewEventForm = false;
-      CookieService.setCampaignCookie(this.campaign);
     }
   }
 
-  deleteEventFromCampaign(index: number) {
-    this.campaign.events.splice(index, 1);
-    this.$store.commit('setCampaignEvents', this.campaign.events);
-    CookieService.setCampaignCookie(this.campaign);
+  deleteEvent() {
+    if (this.activeEventIndex) {
+      const campaign = this.campaign;
+      campaign.events.splice(this.activeEventIndex, 1);
+      fb.campaignsCollection.doc(this.$store.state.currentUser.uid).set({
+        name: 'Wild Space',
+        events: campaign.events,
+        notes: campaign.notes,
+      });
+      this.showEditEventForm = false;
+      this.activeEvent = {
+        title: '',
+        description: '',
+      };
+      this.activeEventIndex = undefined;
+    }
   }
 }
 </script>
