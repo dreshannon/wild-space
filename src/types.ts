@@ -1,6 +1,7 @@
 export interface Campaign {
   name: string;
   events: Event[];
+  notes: string;
 }
 
 export interface Event {
