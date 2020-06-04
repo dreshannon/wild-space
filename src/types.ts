@@ -29,6 +29,8 @@ export interface Character {
   background: string;
   personality: string;
   picture: string;
+  currency: number;
+  inspiration: boolean;
 }
 
 export interface Skill {

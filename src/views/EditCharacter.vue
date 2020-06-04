@@ -18,7 +18,7 @@
         <v-text-field
           v-model="character.race"
           label="Race"
-          @change="setCharacterRace()"
+          @change="saveCharacter()"
         />
       </v-col>
       <v-col
@@ -27,7 +27,7 @@
         <v-text-field
           v-model="character.name"
           label="Name"
-          @change="setCharacterName()"
+          @change="saveCharacter()"
         />
       </v-col>
     </v-row>
@@ -38,32 +38,32 @@
         <v-text-field
           v-model="character.traits.strength"
           label="Strength"
-          @change="setCharacterTraits()"
+          @change="saveCharacter()"
         />
         <v-text-field
           v-model="character.traits.dexterity"
           label="Dexterity"
-          @change="setCharacterTraits()"
+          @change="saveCharacter()"
         />
         <v-text-field
           v-model="character.traits.relations"
           label="Relations"
-          @change="setCharacterTraits()"
+          @change="saveCharacter()"
         />
         <v-text-field
           v-model="character.traits.culture"
           label="Culture"
-          @change="setCharacterTraits()"
+          @change="saveCharacter()"
         />
         <v-text-field
           v-model="character.traits.biology"
           label="Biology"
-          @change="setCharacterTraits()"
+          @change="saveCharacter()"
         />
         <v-text-field
           v-model="character.traits.engineering"
           label="Engineering"
-          @change="setCharacterTraits()"
+          @change="saveCharacter()"
         />
       </v-col>
       <v-col
@@ -72,7 +72,7 @@
         <v-text-field
           v-model="character.health"
           label="Health"
-          @change="setCharacterHealth()"
+          @change="saveCharacter()"
         />
         <v-card flat>
           <v-card-title>
@@ -87,7 +87,7 @@
                 {{ skill.name }}
                 <v-btn
                   icon
-                  @click="removeSkillFromCharacter(index)"
+                  @click="removeSkill(index)"
                 >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -106,14 +106,14 @@
                 <v-text-field
                   v-model="newSkill.name"
                   label="Name"
-                  @keyup.enter="addSkillToCharacter()"
+                  @keyup.enter="addSkill()"
                 />
               </v-list-item-title>
               <v-list-item-subtitle>
                 <v-text-field
                   v-model="newSkill.description"
                   label="Description"
-                  @keyup.enter="addSkillToCharacter()"
+                  @keyup.enter="addSkill()"
                 />
               </v-list-item-subtitle>
               <v-list-item-subtitle>
@@ -127,7 +127,7 @@
           </v-list-item>
 
           <v-card-actions>
-            <v-btn @click="addSkillToCharacter()">
+            <v-btn @click="addSkill()">
               Add
             </v-btn>
           </v-card-actions>
@@ -145,7 +145,7 @@
                 {{ language }}
                 <v-btn
                   icon
-                  @click="removeLanguageFromCharacter(index)"
+                  @click="removeLanguage(index)"
                 >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -158,14 +158,14 @@
                 <v-text-field
                   v-model="newLanguage"
                   label="Language"
-                  @keyup.enter="addLanguageToCharacter()"
+                  @keyup.enter="addLanguage()"
                 />
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-card-actions>
-            <v-btn @click="addLanguageToCharacter()">
+            <v-btn @click="addLanguage()">
               Add
             </v-btn>
           </v-card-actions>
@@ -177,7 +177,7 @@
         <v-textarea
           v-model="character.inventory"
           label="Inventory"
-          @change="setCharacterInventory()"
+          @change="saveCharacter()"
         />
       </v-col>
     </v-row>
@@ -186,12 +186,12 @@
         <v-textarea
           v-model="character.personality"
           label="Personality"
-          @change="setCharacterPersonality()"
+          @change="saveCharacter()"
         />
         <v-textarea
           v-model="character.background"
           label="Background"
-          @change="setCharacterBackground()"
+          @change="saveCharacter()"
         />
       </v-col>
     </v-row>
@@ -212,11 +212,14 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import {Character, Skill} from '../types';
-import CookieService from '../services/cookie-service';
+import fb from '../firebaseConfig';
 
 @Component
 export default class EditCharacter extends Vue {
-  character: Character | undefined = undefined;
+  get character(): Character {
+    return this.$store.state.character;
+  }
+
   newSkill: Skill = {
     name: '',
     description: '',
@@ -224,106 +227,66 @@ export default class EditCharacter extends Vue {
   };
   newLanguage = '';
 
-  created() {
-    this.character = this.$store.state.character;
-  }
-
-  addSkillToCharacter() {
+  addSkill() {
     if (this.character && this.newSkill.name) {
       this.character.skills.push({
         name: this.newSkill.name,
         description: this.newSkill.description,
         trait: this.newSkill.trait,
       });
-      this.setCharacterSkills();
+      this.saveCharacter();
       this.newSkill.name = '';
       this.newSkill.description = '';
       this.newSkill.trait = '';
     }
   }
-  removeSkillFromCharacter(index: number) {
-    if (this.character) {
-      this.character.skills.splice(index, 1);
-    }
+
+  removeSkill(index: number) {
+    this.character.skills.splice(index, 1);
+    this.saveCharacter();
   }
 
-  addLanguageToCharacter() {
-    if (this.character && this.newLanguage) {
+  addLanguage() {
+    if (this.newLanguage) {
       this.character.languages.push(this.newLanguage);
-      this.setCharacterLanguages();
+      this.saveCharacter();
       this.newLanguage = '';
     }
   }
 
-  removeLanguageFromCharacter(index: number) {
-    if (this.character) {
-      this.character.languages.splice(index, 1);
-      this.setCharacterLanguages();
-    }
+  removeLanguage(index: number) {
+    this.character.languages.splice(index, 1);
+    this.saveCharacter();
   }
 
-  setCharacterRace() {
-    if (this.character) {
-      this.$store.commit('setCharacterRace', this.character.race);
-    }
-  }
-
-  setCharacterName() {
-    if (this.character) {
-      this.$store.commit('setCharacterName', this.character.name);
-    }
-  }
-
-  setCharacterTraits() {
-    if (this.character) {
-      this.$store.commit('setCharacterTraits', this.character.traits);
-    }
-  }
-
-  setCharacterHealth() {
-    if (this.character) {
-      this.$store.commit('setCharacterHealth', this.character.health);
-      if (this.character.currentHealth === 0) {
-        this.$store.commit('setCharacterCurrentHealth', this.character.health);
-      }
-    }
-  }
-
-  setCharacterSkills() {
-    if (this.character) {
-      this.$store.commit('setCharacterSkills', this.character.skills);
-    }
-  }
-
-  setCharacterLanguages() {
-    if (this.character) {
-      this.$store.commit('setCharacterLanguages', this.character.languages);
-    }
-  }
-
-  setCharacterInventory() {
-    if (this.character) {
-      this.$store.commit('setCharacterInventory', this.character.inventory);
-    }
-  }
-
-  setCharacterPersonality() {
-    if (this.character) {
-      this.$store.commit('setCharacterPersonality', this.character.personality);
-    }
-  }
-
-  setCharacterBackground() {
-    if (this.character) {
-      this.$store.commit('setCharacterBackground', this.character.background);
-    }
+  saveCharacter() {
+    fb.charactersCollection.doc(this.$store.state.currentUser.uid).set({
+      name: this.character.name,
+      race: this.character.race,
+      traits: {
+        strength: this.character.traits.strength,
+        dexterity: this.character.traits.dexterity,
+        relations: this.character.traits.relations,
+        culture: this.character.traits.culture,
+        biology: this.character.traits.biology,
+        engineering: this.character.traits.engineering,
+      },
+      skills: this.character.skills,
+      health: this.character.health,
+      currentHealth: this.character.currentHealth,
+      languages: this.character.languages,
+      inventory: this.character.inventory,
+      background: this.character.background,
+      personality: this.character.personality,
+      picture: this.character.picture,
+      currency: this.character.currency,
+      inspiration: this.character.inspiration,
+    });
   }
 
   save() {
-    if (this.character) {
-      CookieService.setCharacterCookie(this.character);
-      this.$router.push('/');
-    }
+    this.saveCharacter();
+    this.$router.push('/');
   }
 }
 </script>

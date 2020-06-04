@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import CookieService from '../services/cookie-service';
-import {Event, Campaign, Character} from '@/types';
+import {Campaign, Character} from '@/types';
 import fb from '../firebaseConfig';
 
 Vue.use(Vuex);
@@ -31,6 +30,8 @@ const character: Character = {
   background: '',
   personality: '',
   picture: '',
+  currency: 0,
+  inspiration: false,
 };
 
 export const store = new Vuex.Store({
@@ -39,7 +40,6 @@ export const store = new Vuex.Store({
     userProfile: {},
     campaign,
     character,
-    notes: CookieService.getCampaignNotes(),
   },
   mutations: {
     setCurrentUser(state, val) {
@@ -52,41 +52,8 @@ export const store = new Vuex.Store({
     setCampaign(state, val) {
       state.campaign = val;
     },
-    setCharacterInventory(state, inventory: string) {
-      state.character.inventory = inventory;
-    },
-    setCampaignNotes(state, notes: string) {
-      state.notes = notes;
-    },
-    setCampaignEvents(state, events: Event[]) {
-      state.campaign.events = events;
-    },
-    setCharacterRace(state, race: string) {
-      state.character.race = race;
-    },
-    setCharacterName(state, name: string) {
-      state.character.name = name;
-    },
-    setCharacterTraits(state, traits) {
-      state.character.traits = traits;
-    },
-    setCharacterHealth(state, health: number) {
-      state.character.health = health;
-    },
-    setCharacterCurrentHealth(state, health: number) {
-      state.character.currentHealth = health;
-    },
-    setCharacterSkills(state, skills) {
-      state.character.skills = skills;
-    },
-    setCharacterLanguages(state, languages: string[]) {
-      state.character.languages = languages;
-    },
-    setCharacterPersonality(state, personality: string) {
-      state.character.personality = personality;
-    },
-    setCharacterBackground(state, background) {
-      state.character.background = background;
+    setCharacter(state, val) {
+      state.character = val;
     },
   },
   actions: {
@@ -105,7 +72,45 @@ export const store = new Vuex.Store({
     },
     fetchCampaign({commit, state}) {
       fb.campaignsCollection.doc(state.currentUser.uid).onSnapshot((querySnapshot) => {
-        commit('setCampaign', querySnapshot.data());
+        if (querySnapshot.data()) {
+          commit('setCampaign', querySnapshot.data());
+        } else {
+          commit('setCampaign', {
+            name: 'Wild Space',
+            events: [],
+            notes: '',
+          });
+        }
+      });
+    },
+    fetchCharacter({commit, state}) {
+      fb.charactersCollection.doc(state.currentUser.uid).onSnapshot((querySnapshot) => {
+        if (querySnapshot.data()) {
+          commit('setCharacter', querySnapshot.data());
+        } else {
+          commit('setCharacter', {
+            name: '',
+            race: '',
+            traits: {
+              strength: 0,
+              dexterity: 0,
+              relations: 0,
+              culture: 0,
+              biology: 0,
+              engineering: 0,
+            },
+            skills: [],
+            health: 0,
+            currentHealth: 0,
+            languages: [],
+            inventory: '',
+            background: '',
+            personality: '',
+            picture: '',
+            currency: 0,
+            inspiration: false,
+          });
+        }
       });
     },
   },
@@ -117,5 +122,6 @@ fb.auth.onAuthStateChanged((user: any) => {
   if (user) {
     store.commit('setCurrentUser', user);
     store.dispatch('fetchCampaign');
+    store.dispatch('fetchCharacter');
   }
 });
