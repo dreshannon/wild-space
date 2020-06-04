@@ -48,13 +48,18 @@
             v-model.trim="signupForm.name"
             label="Name"
           />
+          <v-select
+            v-model="signupForm.role"
+            label="Role"
+            :items="roles"
+          />
           <v-text-field
             v-model.trim="signupForm.email"
             type="email"
             label="Email"
           />
           <v-text-field
-            v-model.trim="signupForm.passwaord"
+            v-model.trim="signupForm.password"
             type="password"
             label="Password"
           />
@@ -141,12 +146,14 @@ export default class Login extends Vue {
   };
   signupForm = {
     name: '',
+    role: 'Player',
     email: '',
-    passwaord: '',
+    password: '',
   };
   passwordForm = {
     email: '',
   };
+  roles = ['Player', 'Game Master'];
 
   login() {
     fb.auth.signInWithEmailAndPassword(this.loginForm.email, this.loginForm.password)
@@ -165,24 +172,11 @@ export default class Login extends Vue {
   signup() {
     this.performingRequest = true;
 
-    fb.auth.createUserWithEmailAndPassword(this.signupForm.email, this.signupForm.passwaord)
+    fb.auth.createUserWithEmailAndPassword(this.signupForm.email, this.signupForm.password)
       .then((user: any) => {
         console.log(`#signup:\nuser: ${JSON.stringify(user.user, null, 2)}`);
         this.$store.commit('setCurrentUser', user.user);
-
-        console.log(`#signup: Setting user name to: ${this.signupForm.name}`);
-        fb.usersCollection.doc(user.user.uid).set({
-          name: this.signupForm.name,
-        })
-          .then(() => {
-            console.log(`#signup: fetching user profile`);
-            this.$store.dispatch('fetchUserProfile');
-            this.$router.push('/');
-          })
-          .catch((err) => {
-            console.log(err);
-            this.errorMsg = err.message;
-          });
+        this.$router.push('/');
       })
       .catch((err) => {
         console.log(err);

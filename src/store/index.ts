@@ -64,7 +64,14 @@ export const store = new Vuex.Store({
     fetchUserProfile({commit, state}) {
       fb.usersCollection.doc(state.currentUser.uid).get()
         .then((res) => {
-          commit('setUserProfile', res.data());
+          if (res.data()) {
+            commit('setUserProfile', res.data());
+          } else {
+            commit('setUserProfile', {
+              name: '',
+              role: '',
+            });
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -113,6 +120,15 @@ export const store = new Vuex.Store({
         }
       });
     },
+    updateProfile({state}, data) {
+      const name = data.name;
+      const role = data.role;
+
+      fb.usersCollection.doc(state.currentUser.uid).update({name, role})
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   modules: {
   },
@@ -121,7 +137,13 @@ export const store = new Vuex.Store({
 fb.auth.onAuthStateChanged((user: any) => {
   if (user) {
     store.commit('setCurrentUser', user);
+    store.dispatch('fetchUserProfile');
     store.dispatch('fetchCampaign');
     store.dispatch('fetchCharacter');
+    fb.usersCollection.doc(user.uid).onSnapshot((doc) => {
+      if (doc.data()) {
+        store.commit('setUserProfile', doc.data());
+      }
+    });
   }
 });

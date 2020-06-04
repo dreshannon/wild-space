@@ -94,17 +94,35 @@
         lg="9"
         sm="7"
       >
-        <p
-          v-show="character.health"
-          class="d-flex"
-        >
-          Health:
-          <v-text-field
-            v-model="character.currentHealth"
-            :suffix="'/' + character.health + 'hp'"
-            @change="setCharacterCurrentHealth()"
-          />
-        </p>
+        <v-row>
+          <v-col
+            lg="6"
+            sm="12"
+          >
+            <v-text-field
+              v-model="character.currentHealth"
+              label="Health"
+              :suffix="'/' + character.health + 'hp'"
+              @change="saveCharacter()"
+            />
+          </v-col>
+          <v-col
+            lg="6"
+            sm="12"
+          >
+            <v-checkbox
+              v-model="character.inspiration"
+              label="Inspiration"
+              @change="saveCharacter()"
+            />
+          </v-col>
+        </v-row>
+        <v-text-field
+          v-model="character.currency"
+          label="Currency"
+          suffix="credits"
+          @change="saveCharacter()"
+        />
         <v-card
           v-show="character.skills.length"
           flat
@@ -219,13 +237,6 @@ export default class CharacterSheet extends Vue {
     value: 0,
   };
 
-  setCharacterCurrentHealth() {
-    const character = this.character;
-    fb.charactersCollection.doc(this.$store.state.currentUser.uid).set({
-      character,
-    });
-  }
-
   activateRollDialog(trait: string, value: number) {
     this.activeTrait = {
       trait,
@@ -260,6 +271,31 @@ export default class CharacterSheet extends Vue {
     for (let i = 0; i < this.numberofRolls(skill); i++) {
       this.rolls.push(Math.floor(Math.random() * 6) + 1);
     }
+  }
+
+  saveCharacter() {
+    fb.charactersCollection.doc(this.$store.state.currentUser.uid).set({
+      name: this.character.name,
+      race: this.character.race,
+      traits: {
+        strength: this.character.traits.strength,
+        dexterity: this.character.traits.dexterity,
+        relations: this.character.traits.relations,
+        culture: this.character.traits.culture,
+        biology: this.character.traits.biology,
+        engineering: this.character.traits.engineering,
+      },
+      skills: this.character.skills,
+      health: this.character.health,
+      currentHealth: this.character.currentHealth,
+      languages: this.character.languages,
+      inventory: this.character.inventory,
+      background: this.character.background,
+      personality: this.character.personality,
+      picture: this.character.picture,
+      currency: this.character.currency,
+      inspiration: this.character.inspiration,
+    });
   }
 }
 </script>

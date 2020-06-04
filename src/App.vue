@@ -1,20 +1,6 @@
 <template>
   <v-app id="app">
-    <v-app-bar
-      app
-    >
-      <router-link
-        to="/"
-      >
-        <v-toolbar-title>Wild Space</v-toolbar-title>
-      </router-link>
-      <v-spacer />
-      <router-link
-        to="/logout"
-      >
-        Logout
-      </router-link>
-    </v-app-bar>
+    <navigation />
     <v-content>
       <v-container>
         <router-view id="content" />
@@ -22,6 +8,19 @@
     </v-content>
   </v-app>
 </template>
+
+<script lang="ts">
+import {Component, Vue} from 'vue-property-decorator';
+import Navigation from './components/Navigation.vue';
+
+@Component({
+  components: {
+    Navigation,
+  },
+})
+export default class App extends Vue {
+}
+</script>
 
 <style lang="scss">
 #app {
