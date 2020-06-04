@@ -168,13 +168,16 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import {Character, Skill} from '../types';
-import CookieService from '../services/cookie-service';
+import fb from '../firebaseConfig';
 
 @Component
 export default class CharacterSheet extends Vue {
-  @Prop() character!: Character;
+  get character(): Character {
+    return this.$store.state.character;
+  }
+
   activeSkill: Skill = {
     name: '',
     description: '',
@@ -188,8 +191,10 @@ export default class CharacterSheet extends Vue {
   };
 
   setCharacterCurrentHealth() {
-    this.$store.commit('setCharacterCurrentHealth', this.character.currentHealth);
-    CookieService.setCharacterCookie(this.character);
+    const character = this.character;
+    fb.charactersCollection.doc(this.$store.state.currentUser.uid).set({
+      character,
+    });
   }
 
   activateRollDialog(trait: string, value: number) {
