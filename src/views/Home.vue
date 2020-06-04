@@ -14,7 +14,7 @@
       lg="7"
       sm="6"
     >
-      <character-sheet :character="character" />
+      <character-sheet />
     </v-col>
     <v-col>
       <campaign-notes />
@@ -37,35 +37,5 @@ import CampaignNotes from '../components/CampaignNotes.vue';
   },
 })
 export default class Home extends Vue {
-  campaign: Campaign = {
-    name: '',
-    events: [],
-    notes: '',
-  };
-  character: Character = {
-    name: '',
-    race: '',
-    traits: {
-      strength: 0,
-      dexterity: 0,
-      relations: 0,
-      culture: 0,
-      biology: 0,
-      engineering: 0,
-    },
-    skills: [],
-    health: 0,
-    currentHealth: 0,
-    languages: [],
-    inventory: '',
-    background: '',
-    personality: '',
-    picture: '',
-  };
-
-  async mounted() {
-    this.campaign = this.$store.state.campaign;
-    this.character = this.$store.state.character;
-  }
 }
 </script>

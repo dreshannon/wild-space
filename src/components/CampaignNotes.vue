@@ -6,8 +6,7 @@
     </v-card-subtitle>
     <v-card-text>
       <v-textarea
-        v-model="notes"
-        @change="save()"
+        v-model="campaign.notes"
       />
     </v-card-text>
     <v-card-actions class="justify-end">
@@ -20,20 +19,22 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import CookieService from '../services/cookie-service';
+import {Campaign} from '../types';
+import fb from '../firebaseConfig';
 
 @Component
 export default class CampaignNotes extends Vue {
-  notes = '';
-
-  created() {
-    this.notes = this.$store.state.notes;
+  get campaign(): Campaign {
+    return this.$store.state.campaign;
   }
 
   save() {
-    console.log(`#save: triggered`);
-    this.$store.commit('setCampaignNotes', this.notes);
-    CookieService.setCampaignNotesCookie(this.notes);
+    const campaign = this.campaign;
+    fb.campaignsCollection.doc(this.$store.state.currentUser.uid).set({
+      name: 'Wild Space',
+      events: campaign.events,
+      notes: campaign.notes,
+    });
   }
 }
 </script>
