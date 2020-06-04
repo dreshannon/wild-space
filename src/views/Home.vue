@@ -24,7 +24,6 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import {Character, Campaign} from '../types';
 import CampaignTracker from '../components/CampaignTracker.vue';
 import CharacterSheet from '../components/CharacterSheet.vue';
 import CampaignNotes from '../components/CampaignNotes.vue';
