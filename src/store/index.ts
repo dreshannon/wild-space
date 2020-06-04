@@ -1,19 +1,44 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import CookieService from '../services/cookie-service';
-import {Event} from '@/types';
+import {Event, Campaign, Character} from '@/types';
 import fb from '../firebaseConfig';
 
 Vue.use(Vuex);
 
 const currentUser: any | null = null;
+const campaign: Campaign = {
+  name: 'Wild Space',
+  events: [],
+  notes: '',
+};
+const character: Character = {
+  name: '',
+  race: '',
+  traits: {
+    strength: 0,
+    dexterity: 0,
+    relations: 0,
+    culture: 0,
+    biology: 0,
+    engineering: 0,
+  },
+  skills: [],
+  health: 0,
+  currentHealth: 0,
+  languages: [],
+  inventory: '',
+  background: '',
+  personality: '',
+  picture: '',
+};
 
-export default new Vuex.Store({
+export const store = new Vuex.Store({
   state: {
     currentUser,
     userProfile: {},
-    campaign: CookieService.getCampaignCookie(),
-    character: CookieService.getCharacterCookie(),
+    campaign,
+    character,
     notes: CookieService.getCampaignNotes(),
   },
   mutations: {
@@ -21,7 +46,11 @@ export default new Vuex.Store({
       state.currentUser = val;
     },
     setUserProfile(state, val) {
+      console.log(`#setUserProfile:\nuser: ${val}`);
       state.userProfile = val;
+    },
+    setCampaign(state, val) {
+      state.campaign = val;
     },
     setCharacterInventory(state, inventory: string) {
       state.character.inventory = inventory;
@@ -61,6 +90,10 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    clearData({commit}) {
+      commit('setCurrentUser', null);
+      commit('setUserProfile', {});
+    },
     fetchUserProfile({commit, state}) {
       fb.usersCollection.doc(state.currentUser.uid).get()
         .then((res) => {
@@ -70,7 +103,19 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
+    fetchCampaign({commit, state}) {
+      fb.campaignsCollection.doc(state.currentUser.uid).onSnapshot((querySnapshot) => {
+        commit('setCampaign', querySnapshot.data());
+      });
+    },
   },
   modules: {
   },
+});
+
+fb.auth.onAuthStateChanged((user: any) => {
+  if (user) {
+    store.commit('setCurrentUser', user);
+    store.dispatch('fetchCampaign');
+  }
 });
