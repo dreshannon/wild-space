@@ -37,7 +37,10 @@ const character: Character = {
 export const store = new Vuex.Store({
   state: {
     currentUser,
-    userProfile: {},
+    userProfile: {
+      name: '',
+      role: '',
+    },
     campaign,
     character,
   },
