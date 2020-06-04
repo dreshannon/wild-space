@@ -8,6 +8,12 @@
       >
         <v-toolbar-title>Wild Space</v-toolbar-title>
       </router-link>
+      <v-spacer />
+      <router-link
+        to="/logout"
+      >
+        Logout
+      </router-link>
     </v-app-bar>
     <v-content>
       <v-container>
