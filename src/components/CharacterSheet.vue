@@ -2,17 +2,28 @@
   <div>
     <v-card flat>
       <v-card-title class="d-flex justify-space-between">
-        {{ character.name }}
+        Character Sheet
         <router-link to="/character">
           <v-icon>mdi-pencil-outline</v-icon>
         </router-link>
       </v-card-title>
-      <v-card-subtitle class="text-left">
+      <v-card-subtitle>
+        <strong>Click the edit button to the right to edit your character sheet.</strong>
+      </v-card-subtitle>
+      <v-card-title v-show="character.name">
+        {{ character.name }}
+      </v-card-title>
+      <v-card-subtitle
+        v-show="character.race"
+        class="text-left"
+      >
         {{ character.race }}
       </v-card-subtitle>
     </v-card>
     <v-row>
       <v-col
+        v-show="character.traits.strength || character.traits.dexterity || character.traits.relations ||
+          character.traits.culture || character.traits.biology || character.traits.engineering"
         cols="12"
         lg="3"
         sm="5"
@@ -83,7 +94,10 @@
         lg="9"
         sm="7"
       >
-        <p class="d-flex">
+        <p
+          v-show="character.health"
+          class="d-flex"
+        >
           Health:
           <v-text-field
             v-model="character.currentHealth"
@@ -91,7 +105,10 @@
             @change="setCharacterCurrentHealth()"
           />
         </p>
-        <v-card flat>
+        <v-card
+          v-show="character.skills.length"
+          flat
+        >
           <v-card-title>Skills</v-card-title>
           <v-card
             v-for="(skill, index) in character.skills"
@@ -109,7 +126,10 @@
             </v-card-text>
           </v-card>
         </v-card>
-        <v-card flat>
+        <v-card
+          v-show="character.languages.length"
+          flat
+        >
           <v-card-title>Languages</v-card-title>
           <v-list-item
             v-for="(language, index) in character.languages"
@@ -124,19 +144,28 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-card flat>
+    <v-card
+      v-show="character.inventory"
+      flat
+    >
       <v-card-title>Inventory</v-card-title>
       <v-card-text class="text-left description">
         {{ character.inventory }}
       </v-card-text>
     </v-card>
-    <v-card flat>
+    <v-card
+      v-show="character.personality"
+      flat
+    >
       <v-card-title>Personality</v-card-title>
       <v-card-text class="text-left description">
         {{ character.personality }}
       </v-card-text>
     </v-card>
-    <v-card flat>
+    <v-card
+      v-show="character.background"
+      flat
+    >
       <v-card-title>Background</v-card-title>
       <v-card-text class="text-left description">
         {{ character.background }}
