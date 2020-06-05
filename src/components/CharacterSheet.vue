@@ -94,7 +94,9 @@
         lg="9"
         sm="7"
       >
-        <v-row>
+        <v-row
+          v-show="character.health"
+        >
           <v-col
             lg="6"
             sm="12"
