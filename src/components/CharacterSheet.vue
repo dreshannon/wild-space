@@ -105,7 +105,7 @@
               v-model="character.currentHealth"
               label="Health"
               :suffix="'/' + character.health + 'hp'"
-              @change="saveCharacter()"
+              @change="saveCurrentHealth()"
             />
           </v-col>
           <v-col
@@ -115,7 +115,7 @@
             <v-checkbox
               v-model="character.inspiration"
               label="Inspiration"
-              @change="saveCharacter()"
+              @change="updateInspiration()"
             />
           </v-col>
         </v-row>
@@ -123,7 +123,7 @@
           v-model="character.currency"
           label="Currency"
           suffix="credits"
-          @change="saveCharacter()"
+          @change="updateCurrency()"
         />
         <v-card
           v-show="character.skills.length"
@@ -170,8 +170,16 @@
     >
       <v-card-title>Inventory</v-card-title>
       <v-card-text class="text-left description">
-        {{ character.inventory }}
+        <v-textarea
+          v-model="character.inventory"
+          @change="updateInventory()"
+        />
       </v-card-text>
+      <v-card-actions class="justify-end">
+        <v-btn @click="updateInventory()">
+          Save
+        </v-btn>
+      </v-card-actions>
     </v-card>
     <v-card
       v-show="character.personality"
@@ -197,15 +205,52 @@
     >
       <v-card>
         <v-card-title>{{ activeTrait.trait }}</v-card-title>
-        <v-card-text>
-          <v-icon
-            v-for="(roll, index) in rolls"
-            :key="activeTrait.name + '-roll-' + roll + index"
+        <v-card-text
+          class="d-flex justify-space-between"
+        >
+          <div class="d-flex">
+            <v-icon
+              v-for="(roll, index) in rolls"
+              :key="activeTrait.name + '-roll-' + roll + index"
+            >
+              mdi-dice-{{ roll }}
+            </v-icon>
+          </div>
+          <v-card-title
+            v-show="rollSum != 0"
           >
-            mdi-dice-{{ roll }}
-          </v-icon>
+            {{ rollSum }}
+          </v-card-title>
+        </v-card-text>
+        <v-card-title
+          v-if="rerolls.length != 0"
+        >
+          Reroll
+        </v-card-title>
+        <v-card-text
+          v-if="rerolls.length != 0"
+          class="d-flex justify-space-between"
+        >
+          <div class="d-flex">
+            <v-icon
+              v-for="(reroll, index) in rerolls"
+              :key="activeTrait.name + '-reroll-' + reroll + index"
+            >
+              mdi-dice-{{ reroll }}
+            </v-icon>
+          </div>
+          <v-card-title>
+            {{ rerollSum }}
+          </v-card-title>
         </v-card-text>
         <v-card-actions>
+          <v-btn
+            v-show="rolls.length"
+            :disabled="rerolls.length != 0"
+            @click="rerollLowestRoll()"
+          >
+            Reroll Lowest
+          </v-btn>
           <v-spacer />
           <v-btn @click="rollTraitCheck()">
             Roll
@@ -217,7 +262,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+import {Component, Vue, Watch} from 'vue-property-decorator';
 import {Character, Skill} from '../types';
 import fb from '../firebaseConfig';
 
@@ -227,17 +272,39 @@ export default class CharacterSheet extends Vue {
     return this.$store.state.character;
   }
 
-  activeSkill: Skill = {
-    name: '',
-    description: '',
-    trait: '',
-  };
+  get rollSum(): number {
+    if (this.rolls.length) {
+      const reducer = (acc: number, curr: number) => acc + curr;
+      return this.rolls.reduce(reducer);
+    }
+    return 0;
+  }
+  get rerollSum(): number {
+    if (this.rerolls.length) {
+      return this.rerolls.reduce((acc: number, curr: number) => {
+        return acc + curr;
+      });
+    }
+    return 0;
+  }
+
   showRollDialog = false;
   rolls: number[] = [];
+  rerolls: number[] = [];
   activeTrait = {
     trait: '',
     value: 0,
   };
+
+  @Watch('showRollDialog')
+  resetRollsVars() {
+    if (!this.showRollDialog) {
+      this.rolls = [];
+      this.rerolls = [];
+      this.activeTrait.trait = '';
+      this.activeTrait.value = 0;
+    }
+  }
 
   activateRollDialog(trait: string, value: number) {
     this.activeTrait = {
@@ -251,28 +318,54 @@ export default class CharacterSheet extends Vue {
 
   rollTraitCheck() {
     this.rolls = [];
+    this.rerolls = [];
 
     for (let i = 0; i < this.activeTrait.value; i++) {
       this.rolls.push(Math.floor(Math.random() * 6) + 1);
     }
   }
 
-  setActiveSkillAndShowRollMenu(skill: Skill) {
-    this.rolls = [];
-    this.activeSkill = skill;
-    this.showRollDialog = true;
-  }
-
   numberofRolls(skill: Skill): number {
     return this.character.traits[skill.trait];
   }
 
-  rollSkillCheck(skill: Skill) {
-    this.rolls = [];
-
-    for (let i = 0; i < this.numberofRolls(skill); i++) {
-      this.rolls.push(Math.floor(Math.random() * 6) + 1);
+  rerollLowestRoll() {
+    if (this.rolls.length) {
+      const rerolls = [...this.rolls];
+      const reroll = Math.floor(Math.random() * 6) + 1;
+      const minimum = rerolls.reduce((acc, curr) => {
+        if (acc > curr) {
+          return curr;
+        }
+        return acc;
+      });
+      rerolls.splice(this.rolls.indexOf(minimum), 1, reroll);
+      this.rerolls = rerolls;
     }
+  }
+
+  saveCurrentHealth() {
+    fb.charactersCollection.doc(this.$store.state.currentUser.uid).update({
+      currentHealth: this.character.currentHealth,
+    });
+  }
+
+  updateInspiration() {
+    fb.charactersCollection.doc(this.$store.state.currentUser.uid).update({
+      inspiration: this.character.inspiration,
+    });
+  }
+
+  updateCurrency() {
+    fb.charactersCollection.doc(this.$store.state.currentUser.uid).update({
+      currency: this.character.currency,
+    });
+  }
+
+  updateInventory() {
+    fb.charactersCollection.doc(this.$store.state.currentUser.uid).update({
+      inventory: this.character.inventory,
+    });
   }
 
   saveCharacter() {
