@@ -29,7 +29,7 @@ export interface Character {
   background: string;
   personality: string;
   picture: string;
-  currency: number;
+  currency: Currency;
   inspiration: boolean;
 }
 
@@ -37,4 +37,10 @@ export interface Skill {
   name: string;
   description: string;
   trait: string;
+}
+
+interface Currency {
+  imperialAurei: number;
+  federalDollars: number;
+  republicCredits: number;
 }

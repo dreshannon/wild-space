@@ -117,7 +117,7 @@
               v-model="character.currentHealth"
               label="Health"
               :suffix="'/' + character.health + 'hp'"
-              @change="saveCurrentHealth()"
+              @change="updateCurrentHealth()"
             />
           </v-col>
           <v-col
@@ -131,12 +131,41 @@
             />
           </v-col>
         </v-row>
-        <v-text-field
-          v-model="character.currency"
-          label="Currency"
-          suffix="credits"
-          @change="updateCurrency()"
-        />
+        <v-row>
+          <v-col
+            lg="6"
+            sm="12"
+          >
+            <v-text-field
+              v-model="character.currency.federalDollars"
+              type="number"
+              suffix="Federal Dollars"
+              @change="updateCurrency()"
+            />
+          </v-col>
+          <v-col
+            lg="6"
+            sm="12"
+          >
+            <v-text-field
+              v-model="character.currency.republicCredits"
+              type="number"
+              suffix="Republic Credits"
+              @change="updateCurrency()"
+            />
+          </v-col>
+          <v-col
+            lg="6"
+            sm="12"
+          >
+            <v-text-field
+              v-model="character.currency.imperialAurei"
+              type="number"
+              suffix="Imperial Aurei"
+              @change="updateCurrency()"
+            />
+          </v-col>
+        </v-row>
         <v-card
           v-show="character.skills.length"
           flat
@@ -356,7 +385,7 @@ export default class CharacterSheet extends Vue {
     }
   }
 
-  saveCurrentHealth() {
+  updateCurrentHealth() {
     fb.charactersCollection.doc(this.$store.state.currentUser.uid).update({
       currentHealth: this.character.currentHealth,
     });
@@ -370,7 +399,11 @@ export default class CharacterSheet extends Vue {
 
   updateCurrency() {
     fb.charactersCollection.doc(this.$store.state.currentUser.uid).update({
-      currency: this.character.currency,
+      currency: {
+        imperialAurei: this.character.currency.imperialAurei,
+        federalDollars: this.character.currency.federalDollars,
+        republicCredits: this.character.currency.republicCredits,
+      },
     });
   }
 

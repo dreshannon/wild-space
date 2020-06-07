@@ -30,7 +30,11 @@ const character: Character = {
   background: '',
   personality: '',
   picture: '',
-  currency: 0,
+  currency: {
+    imperialAurei: 0,
+    federalDollars: 0,
+    republicCredits: 0,
+  },
   inspiration: false,
 };
 
@@ -116,7 +120,11 @@ export const store = new Vuex.Store({
             background: '',
             personality: '',
             picture: '',
-            currency: 0,
+            currency: {
+              imperialAurei: 0,
+              federalDollars: 0,
+              republicCredits: 0,
+            },
             inspiration: false,
           });
         }
