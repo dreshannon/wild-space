@@ -229,8 +229,17 @@
       v-model="showCharacterPictureModal"
       width="500"
     >
-      <v-card>
+      <v-card
+        :loading="uploadingPicture"
+      >
         <v-card-title>Character Picture</v-card-title>
+        <v-alert
+          v-if="pictureUploadErrorMsg"
+          type="error"
+          tile
+        >
+          {{ pictureUploadErrorMsg }}
+        </v-alert>
         <v-card-text>
           <v-file-input
             accept="image/*"
@@ -274,6 +283,8 @@ export default class EditCharacter extends Vue {
   showCharacterPictureModal = false;
   picture: any = null;
   pictureFile: File | null = null;
+  uploadingPicture = false;
+  pictureUploadErrorMsg = '';
 
   previewPicture(file: any) {
     console.log(file);
@@ -290,6 +301,7 @@ export default class EditCharacter extends Vue {
 
   uploadPicture() {
     if (this.pictureFile) {
+      this.uploadingPicture = true;
       const pictureRef = fb.storageRef.child(`character/${this.pictureFile.name}`).put(this.pictureFile);
       pictureRef.on('state_changed', (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -304,7 +316,10 @@ export default class EditCharacter extends Vue {
         }
       }, (error) => {
         console.log(error);
+        this.uploadingPicture = false;
+        this.pictureUploadErrorMsg = error.message;
       }, () => {
+        this.uploadingPicture = false;
         pictureRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
           console.log('File available at', downloadURL);
           this.character.picture = downloadURL;
