@@ -49,7 +49,6 @@ export const store = new Vuex.Store({
       state.currentUser = val;
     },
     setUserProfile(state, val) {
-      console.log(`#setUserProfile:\nuser: ${val}`);
       state.userProfile = val;
     },
     setCampaign(state, val) {

@@ -10,15 +10,21 @@
       <v-card-subtitle>
         <strong>Click the edit button to the right to edit your character sheet.</strong>
       </v-card-subtitle>
-      <v-card-title v-show="character.name">
-        {{ character.name }}
-      </v-card-title>
-      <v-card-subtitle
-        v-show="character.race"
-        class="text-left"
+      <v-img
+        class="align-end"
+        height="200px"
+        contain
+        :src="character.picture"
       >
-        {{ character.race }}
-      </v-card-subtitle>
+        <v-card-title v-show="character.name">
+          {{ character.name }}
+        </v-card-title>
+        <v-card-subtitle
+          v-show="character.race"
+        >
+          {{ character.race }}
+        </v-card-subtitle>
+      </v-img>
     </v-card>
     <v-row>
       <v-col

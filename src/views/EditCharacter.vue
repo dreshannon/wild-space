@@ -13,6 +13,25 @@
     </v-row>
     <v-row>
       <v-col
+        cols="12"
+      >
+        <v-img
+          height="200px"
+          width="100%"
+          contain
+          :src="character.picture"
+        >
+          <div class="d-flex justify-end">
+            <v-btn
+              icon
+              @click="showCharacterPictureModal = true"
+            >
+              <v-icon>mdi-upload</v-icon>
+            </v-btn>
+          </div>
+        </v-img>
+      </v-col>
+      <v-col
         cols="4"
       >
         <v-text-field
@@ -206,12 +225,38 @@
         </v-btn>
       </v-col>
     </v-row>
+    <v-dialog
+      v-model="showCharacterPictureModal"
+      width="500"
+    >
+      <v-card>
+        <v-card-title>Character Picture</v-card-title>
+        <v-card-text>
+          <v-file-input
+            accept="image/*"
+            label="Image"
+            show-size
+            @change="previewPicture($event)"
+          />
+          <v-img
+            v-if="picture"
+            :src="picture"
+          />
+        </v-card-text>
+        <v-card-actions class="justify-end">
+          <v-btn @click="uploadPicture">
+            Upload
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-form>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import {Character, Skill} from '../types';
+import firebase from 'firebase';
 import fb from '../firebaseConfig';
 
 @Component
@@ -226,6 +271,49 @@ export default class EditCharacter extends Vue {
     trait: '',
   };
   newLanguage = '';
+  showCharacterPictureModal = true;
+  picture: any = null;
+  pictureFile: File | null = null;
+
+  previewPicture(file: any) {
+    console.log(file);
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      if (e && e.target) {
+        this.picture = e.target.result;
+      }
+    };
+    reader.readAsDataURL(file);
+    this.pictureFile = file;
+  }
+
+  uploadPicture() {
+    if (this.pictureFile) {
+      const pictureRef = fb.storageRef.child(`character/${this.pictureFile.name}`).put(this.pictureFile);
+      pictureRef.on('state_changed', (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(`Upload is ${progress}% done`);
+        switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED:
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING:
+          console.log('Upload is running');
+          break;
+        }
+      }, (error) => {
+        console.log(error);
+      }, () => {
+        pictureRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log('File available at', downloadURL);
+          this.character.picture = downloadURL;
+          this.updatePicture();
+          this.showCharacterPictureModal = false;
+        });
+      });
+    }
+  }
 
   addSkill() {
     if (this.character && this.newSkill.name) {
@@ -257,6 +345,12 @@ export default class EditCharacter extends Vue {
   removeLanguage(index: number) {
     this.character.languages.splice(index, 1);
     this.saveCharacter();
+  }
+
+  updatePicture() {
+    fb.charactersCollection.doc(this.$store.state.currentUser.uid).update({
+      picture: this.character.picture,
+    });
   }
 
   saveCharacter() {

@@ -17,12 +17,16 @@ firebase.initializeApp(config);
 // firebase utils
 const db = firebase.firestore();
 const auth = firebase.auth();
+const storage = firebase.storage();
 const currentUser = auth.currentUser;
 
 // firebase collections
 const usersCollection = db.collection('users');
 const campaignsCollection = db.collection('campaigns');
 const charactersCollection = db.collection('characters');
+
+// firebase storage
+const storageRef = storage.ref();
 
 export default {
   db,
@@ -31,4 +35,5 @@ export default {
   usersCollection,
   campaignsCollection,
   charactersCollection,
+  storageRef,
 };
