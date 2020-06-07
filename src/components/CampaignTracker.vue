@@ -11,14 +11,16 @@
       <v-timeline-item
         v-for="(event, index) in campaign.events"
         :key="'event-' + index + '-' + event.title"
+        color="purple"
+        fill-dot
       >
         <v-card
           @click="editEvent(event, index)"
         >
-          <v-card-title>
+          <v-card-title class="purple white--text">
             {{ event.title }}
           </v-card-title>
-          <v-card-text class="text-left description">
+          <v-card-text class="description pt-3">
             {{ event.description }}
           </v-card-text>
         </v-card>
@@ -29,7 +31,8 @@
         <div class="text-center">
           <v-btn
             fab
-            color="pink"
+            color="purple"
+            class="white--text"
             v-on="on"
           >
             <v-icon>mdi-plus</v-icon>
