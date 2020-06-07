@@ -271,7 +271,7 @@ export default class EditCharacter extends Vue {
     trait: '',
   };
   newLanguage = '';
-  showCharacterPictureModal = true;
+  showCharacterPictureModal = false;
   picture: any = null;
   pictureFile: File | null = null;
 
