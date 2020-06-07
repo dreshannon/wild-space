@@ -10,7 +10,11 @@
       />
     </v-card-text>
     <v-card-actions class="justify-end">
-      <v-btn @click="save()">
+      <v-btn
+        class="white--text"
+        color="purple"
+        @click="save()"
+      >
         Save notes
       </v-btn>
     </v-card-actions>

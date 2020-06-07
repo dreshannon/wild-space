@@ -217,7 +217,11 @@
         />
       </v-card-text>
       <v-card-actions class="justify-end">
-        <v-btn @click="updateInventory()">
+        <v-btn
+          class="white--text"
+          color="purple"
+          @click="updateInventory()"
+        >
           Save
         </v-btn>
       </v-card-actions>
