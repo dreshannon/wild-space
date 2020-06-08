@@ -1,14 +1,22 @@
 <template>
   <v-form>
     <v-row>
-      <v-col
-        cols="2"
-        offset="10"
-        class="text-right"
-      >
-        <v-btn @click="save()">
-          Save
-        </v-btn>
+      <v-col cols="12">
+        <v-card>
+          <v-card-title class="white--text d-flex justify-space-between">
+            Edit Character
+            <v-btn
+              color="#53208a"
+              class="white--text"
+              @click="save()"
+            >
+              Save
+            </v-btn>
+          </v-card-title>
+          <v-card-subtitle class="white--text">
+            Click save at the top or bottom of this page to save your changes and return to the home screen.
+          </v-card-subtitle>
+        </v-card>
       </v-col>
     </v-row>
     <v-row>
@@ -23,6 +31,7 @@
         >
           <div class="d-flex justify-end">
             <v-btn
+              color="#53208a"
               icon
               @click="showCharacterPictureModal = true"
             >
@@ -94,7 +103,7 @@
           @change="saveCharacter()"
         />
         <v-card flat>
-          <v-card-title>
+          <v-card-title class="white--text">
             <h2>Skills</h2>
           </v-card-title>
           <v-list-item
@@ -146,13 +155,17 @@
           </v-list-item>
 
           <v-card-actions>
-            <v-btn @click="addSkill()">
+            <v-btn
+              color="#53208a"
+              class="white--text"
+              @click="addSkill()"
+            >
               Add
             </v-btn>
           </v-card-actions>
         </v-card>
         <v-card flat>
-          <v-card-title>
+          <v-card-title class="white--text">
             <h2>Languages</h2>
           </v-card-title>
           <v-list-item
@@ -184,7 +197,11 @@
           </v-list-item>
 
           <v-card-actions>
-            <v-btn @click="addLanguage()">
+            <v-btn
+              color="#53208a"
+              class="white--text"
+              @click="addLanguage()"
+            >
               Add
             </v-btn>
           </v-card-actions>
@@ -193,25 +210,47 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-textarea
-          v-model="character.inventory"
-          label="Inventory"
-          @change="saveCharacter()"
-        />
+        <v-card>
+          <v-card-title class="white--text">
+            Inventory
+          </v-card-title>
+          <v-card-text>
+            <v-textarea
+              v-model="character.inventory"
+              @change="saveCharacter()"
+            />
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-        <v-textarea
-          v-model="character.personality"
-          label="Personality"
-          @change="saveCharacter()"
-        />
-        <v-textarea
-          v-model="character.background"
-          label="Background"
-          @change="saveCharacter()"
-        />
+        <v-card>
+          <v-card-title class="white--text">
+            Personality
+          </v-card-title>
+          <v-card-text>
+            <v-textarea
+              v-model="character.personality"
+              @change="saveCharacter()"
+            />
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-card>
+          <v-card-title class="white--text">
+            Background
+          </v-card-title>
+          <v-card-text>
+            <v-textarea
+              v-model="character.background"
+              @change="saveCharacter()"
+            />
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
     <v-row>
@@ -220,7 +259,11 @@
         offset="10"
         class="text-right"
       >
-        <v-btn @click="save()">
+        <v-btn
+          color="#53208a"
+          class="white--text"
+          @click="save()"
+        >
           Save
         </v-btn>
       </v-col>
@@ -232,7 +275,9 @@
       <v-card
         :loading="uploadingPicture"
       >
-        <v-card-title>Character Picture</v-card-title>
+        <v-card-title class="white--text">
+          Character Picture
+        </v-card-title>
         <v-alert
           v-if="pictureUploadErrorMsg"
           type="error"
@@ -253,7 +298,11 @@
           />
         </v-card-text>
         <v-card-actions class="justify-end">
-          <v-btn @click="uploadPicture">
+          <v-btn
+            color="#53208a"
+            class="white--text"
+            @click="uploadPicture"
+          >
             Upload
           </v-btn>
         </v-card-actions>
@@ -401,4 +450,13 @@ export default class EditCharacter extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.v-form {
+  background-color: #fefffe;
+}
+
+.v-card__title,
+.v-card__subtitle {
+  background-color: #210e39;
+}
+
 </style>

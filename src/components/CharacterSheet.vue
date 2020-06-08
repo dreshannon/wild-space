@@ -1,16 +1,27 @@
 <template>
   <div>
-    <v-card flat>
-      <v-card-title class="d-flex justify-space-between">
+    <v-card
+      class="character-sheet"
+      flat
+    >
+      <v-card-title
+        class="d-flex justify-space-between russian-violet white--text"
+      >
         Character Sheet
-        <router-link to="/character">
+        <v-btn
+          class="white--text"
+          icon
+          to="/character"
+        >
           <v-icon>mdi-pencil-outline</v-icon>
-        </router-link>
+        </v-btn>
       </v-card-title>
-      <v-card-subtitle>
+      <v-card-subtitle
+        class="russian-violet white--text"
+      >
         <strong>Click the edit button to the right to edit your character sheet.</strong>
       </v-card-subtitle>
-      <div class="d-flex flex-no-wrap">
+      <div class="d-flex flex-no-wrap mt-3">
         <v-avatar
           size="200"
           tile
@@ -170,7 +181,11 @@
           v-show="character.skills.length"
           flat
         >
-          <v-card-title>Skills</v-card-title>
+          <v-card-title
+            class="russian-violet white--text"
+          >
+            Skills
+          </v-card-title>
           <v-card
             v-for="(skill, index) in character.skills"
             :key="'skill-' + index"
@@ -191,7 +206,11 @@
           v-show="character.languages.length"
           flat
         >
-          <v-card-title>Languages</v-card-title>
+          <v-card-title
+            class="russian-violet white--text"
+          >
+            Languages
+          </v-card-title>
           <v-list-item
             v-for="(language, index) in character.languages"
             :key="'language-' + index"
@@ -209,8 +228,12 @@
       v-show="character.inventory"
       flat
     >
-      <v-card-title>Inventory</v-card-title>
-      <v-card-text class="text-left description">
+      <v-card-title
+        class="russian-violet white--text"
+      >
+        Inventory
+      </v-card-title>
+      <v-card-text class="description">
         <v-textarea
           v-model="character.inventory"
           @change="updateInventory()"
@@ -219,7 +242,7 @@
       <v-card-actions class="justify-end">
         <v-btn
           class="white--text"
-          color="purple"
+          color="#53208a"
           @click="updateInventory()"
         >
           Save
@@ -230,8 +253,12 @@
       v-show="character.personality"
       flat
     >
-      <v-card-title>Personality</v-card-title>
-      <v-card-text class="text-left description">
+      <v-card-title
+        class="russian-violet white--text"
+      >
+        Personality
+      </v-card-title>
+      <v-card-text class="description mt-3">
         {{ character.personality }}
       </v-card-text>
     </v-card>
@@ -239,8 +266,12 @@
       v-show="character.background"
       flat
     >
-      <v-card-title>Background</v-card-title>
-      <v-card-text class="text-left description">
+      <v-card-title
+        class="russian-violet white--text"
+      >
+        Background
+      </v-card-title>
+      <v-card-text class="description mt-3">
         {{ character.background }}
       </v-card-text>
     </v-card>
@@ -464,5 +495,17 @@ export default class CharacterSheet extends Vue {
 .mdi-dice-5,
 .mdi-dice-6 {
   font-size: 3em;
+}
+
+.v-card {
+  background-color: #fefffe;
+}
+
+.russian-violet {
+  background-color: #210e39;
+}
+
+.v-card__text {
+  color: #210e39 !important;
 }
 </style>

@@ -76,4 +76,8 @@ export default class Navigation extends Vue {
 </script>
 
 <style lang="scss" scoped>
+a {
+  color: #53208a !important;
+  text-decoration: none;
+}
 </style>

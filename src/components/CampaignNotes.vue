@@ -1,7 +1,13 @@
 <template>
   <v-card flat>
-    <v-card-title>Notes</v-card-title>
-    <v-card-subtitle class="text-left">
+    <v-card-title
+      class="white--text"
+    >
+      Notes
+    </v-card-title>
+    <v-card-subtitle
+      class="white--text"
+    >
       For the stuff that needs remembering. <strong>To save, click the button at the bottom right.</strong>
     </v-card-subtitle>
     <v-card-text>
@@ -12,7 +18,7 @@
     <v-card-actions class="justify-end">
       <v-btn
         class="white--text"
-        color="purple"
+        color="#53208a"
         @click="save()"
       >
         Save notes
@@ -44,4 +50,8 @@ export default class CampaignNotes extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.v-card__title,
+.v-card__subtitle {
+  background-color: #210e39;
+}
 </style>

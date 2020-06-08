@@ -47,4 +47,8 @@ export default class App extends Vue {
 .description {
   white-space: pre-line;
 }
+
+.v-content {
+  background-color: #fefffe;
+}
 </style>

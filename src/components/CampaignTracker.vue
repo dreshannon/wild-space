@@ -1,7 +1,11 @@
 <template>
   <v-card flat>
-    <v-card-title>Campaign Tracker</v-card-title>
-    <v-card-subtitle class="text-left">
+    <v-card-title class="white--text">
+      Campaign Tracker
+    </v-card-title>
+    <v-card-subtitle
+      class="white--text"
+    >
       Click the plus button to add a campaign event to the timeline. <strong>Click an event to edit</strong>.
     </v-card-subtitle>
     <v-timeline
@@ -11,13 +15,13 @@
       <v-timeline-item
         v-for="(event, index) in campaign.events"
         :key="'event-' + index + '-' + event.title"
-        color="purple"
+        color="#210e39"
         fill-dot
       >
         <v-card
           @click="editEvent(event, index)"
         >
-          <v-card-title class="purple white--text">
+          <v-card-title class="white--text">
             {{ event.title }}
           </v-card-title>
           <v-card-text class="description pt-3">
@@ -31,7 +35,7 @@
         <div class="text-center">
           <v-btn
             fab
-            color="purple"
+            color="#53208a"
             class="white--text"
             v-on="on"
           >
@@ -50,7 +54,11 @@
             label="Description"
           />
           <div class="d-flex justify-end">
-            <v-btn @click="addEvent()">
+            <v-btn
+              color="#53208a"
+              class="white--text"
+              @click="addEvent()"
+            >
               Add
             </v-btn>
           </div>
@@ -72,10 +80,18 @@
             label="Description"
           />
           <div class="d-flex justify-space-between">
-            <v-btn @click="deleteEvent()">
+            <v-btn
+              color="#960200"
+              class="white--text"
+              @click="deleteEvent()"
+            >
               Delete
             </v-btn>
-            <v-btn @click="saveEditedEvent()">
+            <v-btn
+              color="#53208a"
+              class="white--text"
+              @click="saveEditedEvent()"
+            >
               Save
             </v-btn>
           </div>
@@ -164,4 +180,16 @@ export default class CampaignTracker extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.v-card {
+  background-color: #fefffe;
+}
+
+.v-card__title,
+.v-card__subtitle {
+  background-color: #210e39;
+}
+
+.v-card__text {
+  color: #210e39 !important;
+}
 </style>
