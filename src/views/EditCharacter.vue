@@ -114,6 +114,7 @@
               <v-list-item-title class="d-flex justify-space-between">
                 {{ skill.name }}
                 <v-btn
+                  color="#960200"
                   icon
                   @click="removeSkill(index)"
                 >
@@ -176,6 +177,7 @@
               <v-list-item-title class="d-flex justify-space-between">
                 {{ language }}
                 <v-btn
+                  color="#960200"
                   icon
                   @click="removeLanguage(index)"
                 >
