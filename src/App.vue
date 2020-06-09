@@ -8,49 +8,21 @@
         <router-view id="content" />
       </v-container>
     </v-content>
-    <v-navigation-drawer
-      v-model="showSettings"
-      temporary
-      width="auto"
-      absolute
-      right
-    >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>
-            Settings
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-      <v-divider />
-      <v-list>
-        <v-list-item>
-          <v-list-content>
-            <v-color-picker />
-          </v-list-content>
-        </v-list-item>
-        <v-list-item>
-          <v-list-content>
-            <v-color-picker />
-          </v-list-content>
-        </v-list-item>
-        <v-list-item>
-          <v-list-content>
-            <v-color-picker />
-          </v-list-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+    <settings-drawer
+      :show-settings="showSettings"
+    />
   </v-app>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import Navigation from './components/Navigation.vue';
+import SettingsDrawer from './components/SettingsDrawer.vue';
 
 @Component({
   components: {
     Navigation,
+    SettingsDrawer,
   },
 })
 export default class App extends Vue {
@@ -67,7 +39,6 @@ export default class App extends Vue {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // text-align: center;
   color: #2c3e50;
 }
 

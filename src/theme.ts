@@ -21,8 +21,18 @@ export const darkTheme: VuetifyThemeVariant = {
 };
 
 export const wildTheme: VuetifyThemeVariant = {
-  primary: '#A8449EA',
+  primary: '#A849EA',
   secondary: '#010004',
+  accent: '#560D55',
+  error: '#960200',
+  info: '#8C8CF2',
+  success: '#DDABF8',
+  warning: '#A66102',
+};
+
+export const oldTheme: VuetifyThemeVariant = {
+  primary: '#210E39',
+  secondary: '#53208a',
   accent: '#560D55',
   error: '#960200',
   info: '#8C8CF2',

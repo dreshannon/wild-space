@@ -1,10 +1,10 @@
 <template>
   <v-card flat>
-    <v-card-title class="white--text">
+    <v-card-title class="primary white--text">
       Campaign Tracker
     </v-card-title>
     <v-card-subtitle
-      class="white--text"
+      class="primary white--text"
     >
       Click the plus button to add a campaign event to the timeline. <strong>Click an event to edit</strong>.
     </v-card-subtitle>
@@ -15,16 +15,16 @@
       <v-timeline-item
         v-for="(event, index) in campaign.events"
         :key="'event-' + index + '-' + event.title"
-        color="#210e39"
+        color="primary"
         fill-dot
       >
         <v-card
           @click="editEvent(event, index)"
         >
-          <v-card-title class="white--text">
+          <v-card-title class="primary white--text">
             {{ event.title }}
           </v-card-title>
-          <v-card-text class="description pt-3">
+          <v-card-text class="description primary--text pt-3">
             {{ event.description }}
           </v-card-text>
         </v-card>
@@ -35,7 +35,7 @@
         <div class="text-center">
           <v-btn
             fab
-            color="#53208a"
+            color="secondary"
             class="white--text"
             v-on="on"
           >
@@ -182,14 +182,5 @@ export default class CampaignTracker extends Vue {
 <style lang="scss" scoped>
 .v-card {
   background-color: #fefffe;
-}
-
-.v-card__title,
-.v-card__subtitle {
-  background-color: #210e39;
-}
-
-.v-card__text {
-  color: #210e39 !important;
 }
 </style>
