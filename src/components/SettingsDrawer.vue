@@ -9,26 +9,47 @@
     <v-list-item>
       <v-list-item-content>
         <v-list-item-title>
-          Settings
+          <h2>Settings</h2>
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
     <v-divider />
     <v-list>
-      <v-list-item>
-        <v-list-content>
-          <v-color-picker />
-        </v-list-content>
+      <v-list-item
+        class="my-3"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            <h3>Primary</h3>
+          </v-list-item-title>
+          <v-color-picker
+            v-model="$vuetify.theme.themes.light.primary"
+          />
+        </v-list-item-content>
       </v-list-item>
-      <v-list-item>
-        <v-list-content>
-          <v-color-picker />
-        </v-list-content>
+      <v-list-item
+        class="my-3"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            <h3>Secondary</h3>
+          </v-list-item-title>
+          <v-color-picker
+            v-model="$vuetify.theme.themes.light.secondary"
+          />
+        </v-list-item-content>
       </v-list-item>
-      <v-list-item>
-        <v-list-content>
-          <v-color-picker />
-        </v-list-content>
+      <v-list-item
+        class="my-3"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            <h3>Primary</h3>
+          </v-list-item-title>
+          <v-color-picker
+            v-model="$vuetify.theme.themes.light.primary"
+          />
+        </v-list-item-content>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>

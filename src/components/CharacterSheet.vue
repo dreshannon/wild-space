@@ -5,7 +5,7 @@
       flat
     >
       <v-card-title
-        class="d-flex justify-space-between russian-violet white--text"
+        class="d-flex justify-space-between primary white--text"
       >
         Character Sheet
         <v-btn
@@ -17,7 +17,7 @@
         </v-btn>
       </v-card-title>
       <v-card-subtitle
-        class="russian-violet white--text"
+        class="primary white--text"
       >
         <strong>Click the edit button to the right to edit your character sheet.</strong>
       </v-card-subtitle>
@@ -182,7 +182,7 @@
           flat
         >
           <v-card-title
-            class="russian-violet white--text"
+            class="primary white--text"
           >
             Skills
           </v-card-title>
@@ -207,7 +207,7 @@
           flat
         >
           <v-card-title
-            class="russian-violet white--text"
+            class="primary white--text"
           >
             Languages
           </v-card-title>
@@ -229,7 +229,7 @@
       flat
     >
       <v-card-title
-        class="russian-violet white--text"
+        class="primary white--text"
       >
         Inventory
       </v-card-title>
@@ -242,7 +242,7 @@
       <v-card-actions class="justify-end">
         <v-btn
           class="white--text"
-          color="#53208a"
+          color="secondary"
           @click="updateInventory()"
         >
           Save
@@ -254,7 +254,7 @@
       flat
     >
       <v-card-title
-        class="russian-violet white--text"
+        class="primary white--text"
       >
         Personality
       </v-card-title>
@@ -267,7 +267,7 @@
       flat
     >
       <v-card-title
-        class="russian-violet white--text"
+        class="primary white--text"
       >
         Background
       </v-card-title>
@@ -499,10 +499,6 @@ export default class CharacterSheet extends Vue {
 
 .v-card {
   background-color: #fefffe;
-}
-
-.russian-violet {
-  background-color: #210e39;
 }
 
 .v-card__text {
