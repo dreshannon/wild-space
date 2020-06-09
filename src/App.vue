@@ -1,11 +1,46 @@
 <template>
   <v-app id="app">
-    <navigation />
+    <navigation
+      :toggle-settings="toggleSettings"
+    />
     <v-content>
       <v-container>
         <router-view id="content" />
       </v-container>
     </v-content>
+    <v-navigation-drawer
+      v-model="showSettings"
+      temporary
+      width="auto"
+      absolute
+      right
+    >
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title>
+            Settings
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-divider />
+      <v-list>
+        <v-list-item>
+          <v-list-content>
+            <v-color-picker />
+          </v-list-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-content>
+            <v-color-picker />
+          </v-list-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-content>
+            <v-color-picker />
+          </v-list-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </v-app>
 </template>
 
@@ -19,6 +54,11 @@ import Navigation from './components/Navigation.vue';
   },
 })
 export default class App extends Vue {
+  showSettings = false;
+
+  toggleSettings() {
+    this.showSettings = !this.showSettings;
+  }
 }
 </script>
 
