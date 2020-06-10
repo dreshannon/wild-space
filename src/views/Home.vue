@@ -1,22 +1,26 @@
 <template>
   <v-row>
     <v-col
+      :order="organizationSettings.campaignTracker.position"
       cols="4"
-      xl="4"
-      lg="5"
-      sm="6"
+      :lg="organizationSettings.campaignTracker.size"
+      sm="12"
     >
       <campaign-tracker />
     </v-col>
     <v-col
+      :order="organizationSettings.characterSheet.position"
       cols="8"
-      xl="8"
-      lg="7"
-      sm="6"
+      :lg="organizationSettings.characterSheet.size"
+      sm="12"
     >
       <character-sheet />
     </v-col>
-    <v-col>
+    <v-col
+      :order="organizationSettings.notes.position"
+      :lg="organizationSettings.notes.size"
+      sm="12"
+    >
       <campaign-notes />
     </v-col>
   </v-row>
@@ -36,5 +40,8 @@ import CampaignNotes from '../components/CampaignNotes.vue';
   },
 })
 export default class Home extends Vue {
+  get organizationSettings() {
+    return this.$store.state.organizationSettings;
+  }
 }
 </script>

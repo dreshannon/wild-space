@@ -1,18 +1,19 @@
 <template>
   <v-card flat>
     <v-card-title
-      class="primary white--text"
+      class="primary headerText--text"
     >
       Notes
     </v-card-title>
     <v-card-subtitle
-      class="primary white--text"
+      class="primary headerText--text"
     >
       For the stuff that needs remembering. <strong>To save, click the button at the bottom right.</strong>
     </v-card-subtitle>
     <v-card-text>
       <v-textarea
         v-model="campaign.notes"
+        color="primary"
       />
     </v-card-text>
     <v-card-actions class="justify-end">

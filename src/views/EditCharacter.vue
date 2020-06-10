@@ -3,17 +3,17 @@
     <v-row>
       <v-col cols="12">
         <v-card>
-          <v-card-title class="white--text d-flex justify-space-between">
+          <v-card-title class="primary headerText--text d-flex justify-space-between">
             Edit Character
             <v-btn
-              color="#53208a"
+              color="secondary"
               class="white--text"
               @click="save()"
             >
               Save
             </v-btn>
           </v-card-title>
-          <v-card-subtitle class="white--text">
+          <v-card-subtitle class="primary headerText--text">
             Click save at the top or bottom of this page to save your changes and return to the home screen.
           </v-card-subtitle>
         </v-card>
@@ -31,7 +31,7 @@
         >
           <div class="d-flex justify-end">
             <v-btn
-              color="#53208a"
+              color="secondary"
               icon
               @click="showCharacterPictureModal = true"
             >
@@ -63,47 +63,61 @@
       <v-col
         cols="2"
       >
-        <v-text-field
-          v-model="character.traits.strength"
-          label="Strength"
-          @change="saveCharacter()"
-        />
-        <v-text-field
-          v-model="character.traits.dexterity"
-          label="Dexterity"
-          @change="saveCharacter()"
-        />
-        <v-text-field
-          v-model="character.traits.relations"
-          label="Relations"
-          @change="saveCharacter()"
-        />
-        <v-text-field
-          v-model="character.traits.culture"
-          label="Culture"
-          @change="saveCharacter()"
-        />
-        <v-text-field
-          v-model="character.traits.biology"
-          label="Biology"
-          @change="saveCharacter()"
-        />
-        <v-text-field
-          v-model="character.traits.engineering"
-          label="Engineering"
-          @change="saveCharacter()"
-        />
+        <v-card flat>
+          <v-card-title class="primary headerText--text">
+            Traits
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="character.traits.strength"
+              label="Strength"
+              @change="saveCharacter()"
+            />
+            <v-text-field
+              v-model="character.traits.dexterity"
+              label="Dexterity"
+              @change="saveCharacter()"
+            />
+            <v-text-field
+              v-model="character.traits.relations"
+              label="Relations"
+              @change="saveCharacter()"
+            />
+            <v-text-field
+              v-model="character.traits.culture"
+              label="Culture"
+              @change="saveCharacter()"
+            />
+            <v-text-field
+              v-model="character.traits.biology"
+              label="Biology"
+              @change="saveCharacter()"
+            />
+            <v-text-field
+              v-model="character.traits.engineering"
+              label="Engineering"
+              @change="saveCharacter()"
+            />
+          </v-card-text>
+        </v-card>
       </v-col>
       <v-col
         cols="10"
       >
-        <v-text-field
-          v-model="character.health"
-          label="Health"
-          @change="saveCharacter()"
-        />
         <v-card flat>
-          <v-card-title class="white--text">
+          <v-card-title class="primary headerText--text">
+            Volitile
+          </v-card-title>
+          <v-card-text>
+            <v-text-field
+              v-model="character.health"
+              label="Health"
+              @change="saveCharacter()"
+            />
+          </v-card-text>
+        </v-card>
+        <v-card flat>
+          <v-card-title class="primary headerText--text">
             <h2>Skills</h2>
           </v-card-title>
           <v-list-item
@@ -114,7 +128,7 @@
               <v-list-item-title class="d-flex justify-space-between">
                 {{ skill.name }}
                 <v-btn
-                  color="#960200"
+                  color="error"
                   icon
                   @click="removeSkill(index)"
                 >
@@ -157,7 +171,7 @@
 
           <v-card-actions>
             <v-btn
-              color="#53208a"
+              color="secondary"
               class="white--text"
               @click="addSkill()"
             >
@@ -166,7 +180,7 @@
           </v-card-actions>
         </v-card>
         <v-card flat>
-          <v-card-title class="white--text">
+          <v-card-title class="primary headerText--text">
             <h2>Languages</h2>
           </v-card-title>
           <v-list-item
@@ -177,7 +191,7 @@
               <v-list-item-title class="d-flex justify-space-between">
                 {{ language }}
                 <v-btn
-                  color="#960200"
+                  color="error"
                   icon
                   @click="removeLanguage(index)"
                 >
@@ -200,7 +214,7 @@
 
           <v-card-actions>
             <v-btn
-              color="#53208a"
+              color="secondary"
               class="white--text"
               @click="addLanguage()"
             >
@@ -213,7 +227,7 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title class="white--text">
+          <v-card-title class="primary headerText--text">
             Inventory
           </v-card-title>
           <v-card-text>
@@ -228,7 +242,7 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title class="white--text">
+          <v-card-title class="primary headerText--text">
             Personality
           </v-card-title>
           <v-card-text>
@@ -243,7 +257,7 @@
     <v-row>
       <v-col>
         <v-card>
-          <v-card-title class="white--text">
+          <v-card-title class="primary headerText--text">
             Background
           </v-card-title>
           <v-card-text>
@@ -262,7 +276,7 @@
         class="text-right"
       >
         <v-btn
-          color="#53208a"
+          color="secondary"
           class="white--text"
           @click="save()"
         >
@@ -452,13 +466,4 @@ export default class EditCharacter extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.v-form {
-  background-color: #fefffe;
-}
-
-.v-card__title,
-.v-card__subtitle {
-  background-color: #210e39;
-}
-
 </style>

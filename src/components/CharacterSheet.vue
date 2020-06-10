@@ -5,11 +5,11 @@
       flat
     >
       <v-card-title
-        class="d-flex justify-space-between primary white--text"
+        class="d-flex justify-space-between primary headerText--text"
       >
         Character Sheet
         <v-btn
-          class="white--text"
+          class="headerText--text"
           icon
           to="/character"
         >
@@ -17,7 +17,7 @@
         </v-btn>
       </v-card-title>
       <v-card-subtitle
-        class="primary white--text"
+        class="primary headerText--text"
       >
         <strong>Click the edit button to the right to edit your character sheet.</strong>
       </v-card-subtitle>
@@ -32,11 +32,15 @@
           />
         </v-avatar>
         <div>
-          <v-card-title v-show="character.name">
+          <v-card-title
+            v-show="character.name"
+            class="tertiary--text"
+          >
             {{ character.name }}
           </v-card-title>
           <v-card-subtitle
             v-show="character.race"
+            class="tertiary--text"
           >
             {{ character.race }}
           </v-card-subtitle>
@@ -51,63 +55,71 @@
         lg="3"
         sm="5"
       >
+        <v-card flat>
+          <v-card-title class="primary headerText--text">
+            Traits
+          </v-card-title>
+          <v-card-subtitle class="primary headerText--text">
+            <strong>Click a trait to roll it's value.</strong>
+          </v-card-subtitle>
+        </v-card>
         <v-card
-          class="character-sheet-trait"
+          class="character-sheet-trait tertiary--text"
           flat
           @click="activateRollDialog('Strength', character.traits.strength)"
         >
           <v-card-title>Strength</v-card-title>
-          <v-card-text class="text-left">
+          <v-card-text class="tertiary--text">
             {{ character.traits.strength }}
           </v-card-text>
         </v-card>
         <v-card
-          class="character-sheet-trait"
+          class="character-sheet-trait tertiary--text"
           flat
           @click="activateRollDialog('Dexterity', character.traits.dexterity)"
         >
           <v-card-title>Dexterity</v-card-title>
-          <v-card-text class="text-left">
+          <v-card-text class="tertiary--text">
             {{ character.traits.dexterity }}
           </v-card-text>
         </v-card>
         <v-card
-          class="character-sheet-trait"
+          class="character-sheet-trait tertiary--text"
           flat
           @click="activateRollDialog('Relations', character.traits.relations)"
         >
           <v-card-title>Relations</v-card-title>
-          <v-card-text class="text-left">
+          <v-card-text class="tertiary--text">
             {{ character.traits.relations }}
           </v-card-text>
         </v-card>
         <v-card
-          class="character-sheet-trait"
+          class="character-sheet-trait tertiary--text"
           flat
           @click="activateRollDialog('Culture', character.traits.culture)"
         >
           <v-card-title>Culture</v-card-title>
-          <v-card-text class="text-left">
+          <v-card-text class="tertiary--text">
             {{ character.traits.culture }}
           </v-card-text>
         </v-card>
         <v-card
-          class="character-sheet-trait"
+          class="character-sheet-trait tertiary--text"
           flat
           @click="activateRollDialog('Biology', character.traits.biology)"
         >
           <v-card-title>Biology</v-card-title>
-          <v-card-text class="text-left">
+          <v-card-text class="tertiary--text">
             {{ character.traits.biology }}
           </v-card-text>
         </v-card>
         <v-card
-          class="character-sheet-trait"
+          class="character-sheet-trait tertiary--text"
           flat
           @click="activateRollDialog('Engineering', character.traits.engineering)"
         >
           <v-card-title>Engineering</v-card-title>
-          <v-card-text class="text-left">
+          <v-card-text class="tertiary--text">
             {{ character.traits.engineering }}
           </v-card-text>
         </v-card>
@@ -117,66 +129,89 @@
         lg="9"
         sm="7"
       >
-        <v-row
-          v-show="character.health"
+        <v-card
+          flat
         >
-          <v-col
-            lg="6"
-            sm="12"
+          <v-card-title
+            class="primary headerText--text"
           >
-            <v-text-field
-              v-model="character.currentHealth"
-              label="Health"
-              :suffix="'/' + character.health + 'hp'"
-              @change="updateCurrentHealth()"
-            />
-          </v-col>
-          <v-col
-            lg="6"
-            sm="12"
+            Volitile
+          </v-card-title>
+          <v-card-text
+            class="headerText--text"
           >
-            <v-checkbox
-              v-model="character.inspiration"
-              label="Inspiration"
-              @change="updateInspiration()"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col
-            lg="6"
-            sm="12"
-          >
-            <v-text-field
-              v-model="character.currency.federalDollars"
-              type="number"
-              suffix="Federal Dollars"
-              @change="updateCurrency()"
-            />
-          </v-col>
-          <v-col
-            lg="6"
-            sm="12"
-          >
-            <v-text-field
-              v-model="character.currency.republicCredits"
-              type="number"
-              suffix="Republic Credits"
-              @change="updateCurrency()"
-            />
-          </v-col>
-          <v-col
-            lg="6"
-            sm="12"
-          >
-            <v-text-field
-              v-model="character.currency.imperialAurei"
-              type="number"
-              suffix="Imperial Aurei"
-              @change="updateCurrency()"
-            />
-          </v-col>
-        </v-row>
+            <v-row
+              v-show="character.health"
+            >
+              <v-col
+                lg="6"
+                sm="12"
+              >
+                <v-text-field
+                  v-model="character.currentHealth"
+                  label="Health"
+                  color="bodyText"
+                  class="bodyText--text"
+                  :suffix="'/' + character.health + 'hp'"
+                  @change="updateCurrentHealth()"
+                />
+              </v-col>
+              <v-col
+                lg="6"
+                sm="12"
+              >
+                <v-checkbox
+                  v-model="character.inspiration"
+                  color="bodyText"
+                  class="bodyText--text"
+                  label="Inspiration"
+                  @change="updateInspiration()"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col
+                lg="6"
+                sm="12"
+              >
+                <v-text-field
+                  v-model="character.currency.federalDollars"
+                  color="bodyText"
+                  class="bodyText--text"
+                  type="number"
+                  suffix="Federal Dollars"
+                  @change="updateCurrency()"
+                />
+              </v-col>
+              <v-col
+                lg="6"
+                sm="12"
+              >
+                <v-text-field
+                  v-model="character.currency.republicCredits"
+                  color="bodyText"
+                  class="bodyText--text"
+                  type="number"
+                  suffix="Republic Credits"
+                  @change="updateCurrency()"
+                />
+              </v-col>
+              <v-col
+                lg="6"
+                sm="12"
+              >
+                <v-text-field
+                  v-model="character.currency.imperialAurei"
+                  color="bodyText"
+                  class="bodyText--text"
+                  type="number"
+                  suffix="Imperial Aurei"
+                  @change="updateCurrency()"
+                />
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
         <v-card
           v-show="character.skills.length"
           flat
@@ -191,13 +226,13 @@
             :key="'skill-' + index"
             flat
           >
-            <v-card-title>
+            <v-card-title class="bodyText--text">
               {{ skill.name }}
             </v-card-title>
-            <v-card-subtitle class="text-left">
+            <v-card-subtitle class="bodyText--text">
               {{ skill.trait }}
             </v-card-subtitle>
-            <v-card-text class="text-left">
+            <v-card-text class="bodyText--text">
               {{ skill.description }}
             </v-card-text>
           </v-card>
@@ -207,7 +242,7 @@
           flat
         >
           <v-card-title
-            class="primary white--text"
+            class="primary headerText--text"
           >
             Languages
           </v-card-title>
@@ -216,7 +251,7 @@
             :key="'language-' + index"
           >
             <v-list-item-content>
-              <v-list-item-title class="text-left">
+              <v-list-item-title class="bodyText--text">
                 {{ language }}
               </v-list-item-title>
             </v-list-item-content>
@@ -229,13 +264,15 @@
       flat
     >
       <v-card-title
-        class="primary white--text"
+        class="primary headerText--text"
       >
         Inventory
       </v-card-title>
       <v-card-text class="description">
         <v-textarea
           v-model="character.inventory"
+          color="bodyText"
+          class="bodyText--text"
           @change="updateInventory()"
         />
       </v-card-text>
@@ -254,11 +291,11 @@
       flat
     >
       <v-card-title
-        class="primary white--text"
+        class="primary headerText--text"
       >
         Personality
       </v-card-title>
-      <v-card-text class="description mt-3">
+      <v-card-text class="description mt-3 bodyText--text">
         {{ character.personality }}
       </v-card-text>
     </v-card>
@@ -267,11 +304,11 @@
       flat
     >
       <v-card-title
-        class="primary white--text"
+        class="primary headerText--text"
       >
         Background
       </v-card-title>
-      <v-card-text class="description mt-3">
+      <v-card-text class="description mt-3 bodyText--text">
         {{ character.background }}
       </v-card-text>
     </v-card>
@@ -280,7 +317,9 @@
       max-width="290"
     >
       <v-card>
-        <v-card-title>{{ activeTrait.trait }}</v-card-title>
+        <v-card-title class="primary headerText--text">
+          {{ activeTrait.trait }}
+        </v-card-title>
         <v-card-text
           class="d-flex justify-space-between"
         >
@@ -322,13 +361,17 @@
         <v-card-actions>
           <v-btn
             v-show="rolls.length"
+            color="secondary"
             :disabled="rerolls.length != 0"
             @click="rerollLowestRoll()"
           >
             Reroll Lowest
           </v-btn>
           <v-spacer />
-          <v-btn @click="rollTraitCheck()">
+          <v-btn
+            color="secondary"
+            @click="rollTraitCheck()"
+          >
             Roll
           </v-btn>
         </v-card-actions>
@@ -495,13 +538,5 @@ export default class CharacterSheet extends Vue {
 .mdi-dice-5,
 .mdi-dice-6 {
   font-size: 3em;
-}
-
-.v-card {
-  background-color: #fefffe;
-}
-
-.v-card__text {
-  color: #210e39 !important;
 }
 </style>

@@ -1,12 +1,15 @@
 <template>
-  <v-app-bar app>
-    <router-link to="/">
+  <v-app-bar
+    app
+    color="background"
+  >
+    <v-toolbar-title class="secondary--text">
       Wild Space
-    </router-link>
+    </v-toolbar-title>
     <v-spacer />
     <v-btn
       class="mx-1"
-      color="#53208a"
+      color="secondary"
       text
       @click="showAccountModal = true"
     >
@@ -14,7 +17,7 @@
     </v-btn>
     <v-btn
       class="mx-1"
-      color="#53208a"
+      color="secondary"
       text
       @click="toggleSettings"
     >
@@ -22,6 +25,7 @@
     </v-btn>
     <v-btn
       class="mx-1"
+      color="secondary"
       text
       to="logout"
     >

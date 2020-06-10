@@ -30,9 +30,24 @@ export const wildTheme: VuetifyThemeVariant = {
   warning: '#A66102',
 };
 
-export const oldTheme: VuetifyThemeVariant = {
+export const oldTheme = {
   primary: '#210E39',
   secondary: '#53208a',
+  background: '#FEFFFE',
+  headerText: '#FEFFFE',
+  bodyText: '#210E39',
+  accent: '#560D55',
+  error: '#960200',
+  info: '#8C8CF2',
+  success: '#DDABF8',
+  warning: '#A66102',
+};
+export const customTheme = {
+  primary: '#210E39',
+  secondary: '#53208a',
+  background: '#FEFFFE',
+  headerText: '#FEFFFE',
+  bodyText: '#210E39',
   accent: '#560D55',
   error: '#960200',
   info: '#8C8CF2',

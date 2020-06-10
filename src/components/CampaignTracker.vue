@@ -1,5 +1,8 @@
 <template>
-  <v-card flat>
+  <v-card
+    class="background"
+    flat
+  >
     <v-card-title class="primary white--text">
       Campaign Tracker
     </v-card-title>
@@ -19,12 +22,13 @@
         fill-dot
       >
         <v-card
+          color="primary"
           @click="editEvent(event, index)"
         >
           <v-card-title class="primary white--text">
             {{ event.title }}
           </v-card-title>
-          <v-card-text class="description primary--text pt-3">
+          <v-card-text class="description white bodyText--text pt-3">
             {{ event.description }}
           </v-card-text>
         </v-card>
@@ -55,7 +59,7 @@
           />
           <div class="d-flex justify-end">
             <v-btn
-              color="#53208a"
+              color="secondary"
               class="white--text"
               @click="addEvent()"
             >
@@ -81,14 +85,14 @@
           />
           <div class="d-flex justify-space-between">
             <v-btn
-              color="#960200"
+              color="error"
               class="white--text"
               @click="deleteEvent()"
             >
               Delete
             </v-btn>
             <v-btn
-              color="#53208a"
+              color="secondary"
               class="white--text"
               @click="saveEditedEvent()"
             >

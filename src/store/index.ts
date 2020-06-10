@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {Campaign, Character} from '@/types';
+import {Campaign, Character, OrganizationSettings} from '@/types';
 import fb from '../firebaseConfig';
+import SettingsService from '../services/settings-service';
 
 Vue.use(Vuex);
 
@@ -37,6 +38,20 @@ const character: Character = {
   },
   inspiration: false,
 };
+const organizationSettings: OrganizationSettings = {
+  campaignTracker: {
+    size: 4,
+    position: 1,
+  },
+  characterSheet: {
+    size: 8,
+    position: 2,
+  },
+  notes: {
+    size: 12,
+    position: 3,
+  },
+};
 
 export const store = new Vuex.Store({
   state: {
@@ -47,6 +62,7 @@ export const store = new Vuex.Store({
     },
     campaign,
     character,
+    organizationSettings,
   },
   mutations: {
     setCurrentUser(state, val) {
@@ -60,6 +76,9 @@ export const store = new Vuex.Store({
     },
     setCharacter(state, val) {
       state.character = val;
+    },
+    setOrganizationSettings(state, val) {
+      state.organizationSettings = val;
     },
   },
   actions: {
@@ -139,6 +158,10 @@ export const store = new Vuex.Store({
           console.log(err);
         });
     },
+    fetchOrganizationSettings({commit}) {
+      const settings = SettingsService.getOrganization();
+      commit('setOrganizationSettings', settings);
+    },
   },
   modules: {
   },
@@ -150,6 +173,7 @@ fb.auth.onAuthStateChanged((user: any) => {
     store.dispatch('fetchUserProfile');
     store.dispatch('fetchCampaign');
     store.dispatch('fetchCharacter');
+    store.dispatch('fetchOrganizationSettings');
     fb.usersCollection.doc(user.uid).onSnapshot((doc) => {
       if (doc.data()) {
         store.commit('setUserProfile', doc.data());

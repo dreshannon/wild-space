@@ -3,13 +3,14 @@
     <navigation
       :toggle-settings="toggleSettings"
     />
-    <v-content>
+    <v-content class="background">
       <v-container>
         <router-view id="content" />
       </v-container>
     </v-content>
     <settings-drawer
       :show-settings="showSettings"
+      :toggle-settings="toggleSettings"
     />
   </v-app>
 </template>
@@ -18,6 +19,7 @@
 import {Component, Vue} from 'vue-property-decorator';
 import Navigation from './components/Navigation.vue';
 import SettingsDrawer from './components/SettingsDrawer.vue';
+import SettingsService from './services/settings-service';
 
 @Component({
   components: {
@@ -28,8 +30,16 @@ import SettingsDrawer from './components/SettingsDrawer.vue';
 export default class App extends Vue {
   showSettings = false;
 
-  toggleSettings() {
-    this.showSettings = !this.showSettings;
+  toggleSettings(show?: boolean) {
+    if (show != undefined) {
+      this.showSettings = show;
+    } else {
+      this.showSettings = !this.showSettings;
+    }
+  }
+
+  created() {
+    this.$vuetify.theme.themes.light = SettingsService.getTheme();
   }
 }
 </script>
@@ -59,7 +69,7 @@ export default class App extends Vue {
   white-space: pre-line;
 }
 
-.v-content {
-  background-color: #fefffe;
-}
+// .v-content {
+//   background-color: #fefffe;
+// }
 </style>

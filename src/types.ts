@@ -44,3 +44,18 @@ interface Currency {
   federalDollars: number;
   republicCredits: number;
 }
+
+export interface OrganizationSettings {
+  campaignTracker: {
+    size: number;
+    position: number;
+  };
+  characterSheet: {
+    size: number;
+    position: number;
+  };
+  notes: {
+    size: number;
+    position: number;
+  };
+}
