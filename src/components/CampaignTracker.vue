@@ -3,11 +3,11 @@
     class="background"
     flat
   >
-    <v-card-title class="primary white--text">
+    <v-card-title class="primary headerText--text">
       Campaign Tracker
     </v-card-title>
     <v-card-subtitle
-      class="primary white--text"
+      class="primary headerText--text"
     >
       Click the plus button to add a campaign event to the timeline. <strong>Click an event to edit</strong>.
     </v-card-subtitle>
@@ -25,7 +25,7 @@
           color="primary"
           @click="editEvent(event, index)"
         >
-          <v-card-title class="primary white--text">
+          <v-card-title class="primary headerText--text">
             {{ event.title }}
           </v-card-title>
           <v-card-text class="description white bodyText--text pt-3">
