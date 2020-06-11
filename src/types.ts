@@ -59,3 +59,9 @@ export interface OrganizationSettings {
     position: number;
   };
 }
+
+
+export interface User {
+  name: string;
+  role: string;
+}

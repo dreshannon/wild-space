@@ -17,6 +17,34 @@
     <v-list-group>
       <template v-slot:activator>
         <v-list-item-title>
+          Account
+        </v-list-item-title>
+      </template>
+      <v-list-item>
+        <v-text-field
+          v-model="userProfile.name"
+          label="Name"
+        />
+      </v-list-item>
+      <v-list-item>
+        <v-select
+          v-model="userProfile.role"
+          label="Role"
+          :items="roles"
+        />
+      </v-list-item>
+      <v-list-item class="justify-end">
+        <v-btn
+          color="secondary"
+          @click="saveUser"
+        >
+          Save
+        </v-btn>
+      </v-list-item>
+    </v-list-group>
+    <v-list-group>
+      <template v-slot:activator>
+        <v-list-item-title>
           Organization
         </v-list-item-title>
       </template>
@@ -194,6 +222,7 @@
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import SettingsService from '../services/settings-service';
+import {User} from '@/types';
 
 @Component
 export default class SettingsDrawer extends Vue {
@@ -211,6 +240,12 @@ export default class SettingsDrawer extends Vue {
   get organizationSettings() {
     return this.$store.state.organizationSettings;
   }
+
+  get userProfile() {
+    return this.$store.state.userProfile;
+  }
+
+  roles = ['Player', 'Game Master'];
 
   sizes = [
     {
@@ -232,6 +267,20 @@ export default class SettingsDrawer extends Vue {
   ]
 
   positions = [1, 2, 3];
+
+  saveUser() {
+    const user: User = {
+      name: this.userProfile.name,
+      role: this.userProfile.role,
+    };
+    console.log('#saveUser: saving user: ', user);
+
+    try {
+      SettingsService.saveUser(this.$store.state.currentUser.uid, user);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   saveOrganization() {
     SettingsService.setOrganization(this.organizationSettings);

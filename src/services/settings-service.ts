@@ -1,6 +1,15 @@
 import CookieService from './cookie-service';
 import {customTheme} from '../theme';
 import cookieService from './cookie-service';
+import fb from '../firebaseConfig';
+import {User} from '@/types';
+
+function saveUser(uid: string, user: User) {
+  fb.usersCollection.doc(uid).set({
+    name: user.name,
+    role: user.role,
+  });
+}
 
 function setOrganization(settings: any) {
   CookieService.setOrganizationCookie(settings);
@@ -48,6 +57,7 @@ function resetTheme() {
 }
 
 export default {
+  saveUser,
   setOrganization,
   getOrganization,
   resetOrganization,
