@@ -273,7 +273,6 @@ export default class SettingsDrawer extends Vue {
       name: this.userProfile.name,
       role: this.userProfile.role,
     };
-    console.log('#saveUser: saving user: ', user);
 
     try {
       SettingsService.saveUser(this.$store.state.currentUser.uid, user);
