@@ -216,6 +216,15 @@
         </v-list-item-content>
       </v-list-item>
     </v-list-group>
+    <v-snackbar
+      v-model="snackbarSettings.show"
+      :color="snackbarSettings.color"
+      :timeout="snackbarSettings.timout"
+    >
+      <div class="headerText--text">
+        {{ snackbarSettings.message }}
+      </div>
+    </v-snackbar>
   </v-navigation-drawer>
 </template>
 
@@ -244,6 +253,13 @@ export default class SettingsDrawer extends Vue {
   get userProfile() {
     return this.$store.state.userProfile;
   }
+
+  snackbarSettings = {
+    show: false,
+    timeout: 2000,
+    message: '',
+    color: 'primary',
+  };
 
   roles = ['Player', 'Game Master'];
 
@@ -276,8 +292,13 @@ export default class SettingsDrawer extends Vue {
 
     try {
       SettingsService.saveUser(this.$store.state.currentUser.uid, user);
+      this.snackbarSettings.show = true;
+      this.snackbarSettings.message = 'Account changes saved';
     } catch (error) {
       console.log(error);
+      this.snackbarSettings.color = 'error';
+      this.snackbarSettings.message = 'Account changes could not be saved';
+      this.snackbarSettings.show = true;
     }
   }
 

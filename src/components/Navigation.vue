@@ -28,7 +28,6 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import fb from '../firebaseConfig';
 
 @Component
 export default class Navigation extends Vue {
