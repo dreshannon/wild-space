@@ -104,7 +104,10 @@
       <v-col
         cols="10"
       >
-        <v-card flat>
+        <v-card
+          class="mb-3"
+          flat
+        >
           <v-card-title class="primary headerText--text">
             Volitile
           </v-card-title>
@@ -116,68 +119,63 @@
             />
           </v-card-text>
         </v-card>
-        <v-card flat>
+        <v-card
+          class="mb-3"
+          flat
+        >
           <v-card-title class="primary headerText--text">
             <h2>Skills</h2>
           </v-card-title>
-          <v-list-item
+          <v-card
             v-for="(skill, index) in character.skills"
             :key="'skill-' + index"
+            flat
           >
-            <v-list-item-content>
-              <v-list-item-title class="d-flex justify-space-between">
-                {{ skill.name }}
-                <v-btn
-                  color="error"
-                  icon
-                  @click="removeSkill(index)"
-                >
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </v-list-item-title>
-              <v-list-item-subtitle class="text-left">
-                {{ skill.description }}
-              </v-list-item-subtitle>
-              <v-list-item-subtitle class="text-left">
-                {{ skill.trait }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <v-list-item-title>
-                <v-text-field
-                  v-model="newSkill.name"
-                  label="Name"
-                  @keyup.enter="addSkill()"
-                />
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                <v-text-field
-                  v-model="newSkill.description"
-                  label="Description"
-                  @keyup.enter="addSkill()"
-                />
-              </v-list-item-subtitle>
-              <v-list-item-subtitle>
-                <v-select
-                  v-model="newSkill.trait"
-                  :items="Object.keys(character.traits)"
-                  label="Trait"
-                />
-              </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-
-          <v-card-actions>
-            <v-btn
-              color="secondary"
-              class="white--text"
-              @click="addSkill()"
-            >
-              Add
-            </v-btn>
-          </v-card-actions>
+            <v-card-title class="d-flex justify-space-between">
+              {{ skill.name }}
+              <v-btn
+                color="error"
+                icon
+                @click="removeSkill(index)"
+              >
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-card-title>
+            <v-card-subtitle class="text-capitalize">
+              {{ skill.trait }}
+            </v-card-subtitle>
+            <v-card-text>
+              {{ skill.description }}
+            </v-card-text>
+          </v-card>
+          <v-card flat>
+            <v-card-text>
+              <v-text-field
+                v-model="newSkill.name"
+                label="Name"
+                @keyup.enter="addSkill()"
+              />
+              <v-text-field
+                v-model="newSkill.description"
+                label="Description"
+                @keyup.enter="addSkill()"
+              />
+              <v-select
+                v-model="newSkill.trait"
+                :items="Object.keys(character.traits)"
+                label="Trait"
+              />
+            </v-card-text>
+            <v-card-actions class="justify-end">
+              <v-btn
+                color="secondary"
+                class="white--text"
+                @click="addSkill()"
+              >
+                Add
+              </v-btn>
+            </v-card-actions>
+          </v-card>
         </v-card>
         <v-card flat>
           <v-card-title class="primary headerText--text">
