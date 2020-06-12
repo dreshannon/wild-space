@@ -124,7 +124,7 @@
           flat
         >
           <v-card-title class="primary headerText--text">
-            <h2>Skills</h2>
+            Skills
           </v-card-title>
           <v-card
             v-for="(skill, index) in character.skills"
@@ -179,7 +179,7 @@
         </v-card>
         <v-card flat>
           <v-card-title class="primary headerText--text">
-            <h2>Languages</h2>
+            Languages
           </v-card-title>
           <v-list-item
             v-for="(language, index) in character.languages"
@@ -210,7 +210,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-card-actions>
+          <v-card-actions class="justify-end">
             <v-btn
               color="secondary"
               class="white--text"
