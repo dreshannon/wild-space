@@ -55,73 +55,100 @@
         lg="3"
         sm="5"
       >
-        <v-card flat>
+        <v-card
+          class="mb-3"
+          flat
+        >
           <v-card-title class="primary headerText--text">
             Traits
           </v-card-title>
           <v-card-subtitle class="primary headerText--text">
             <strong>Click a trait to roll it's value.</strong>
           </v-card-subtitle>
-        </v-card>
-        <v-card
-          class="character-sheet-trait tertiary--text"
-          flat
-          @click="activateRollDialog('Strength', character.traits.strength)"
-        >
-          <v-card-title>Strength</v-card-title>
-          <v-card-text class="tertiary--text">
-            {{ character.traits.strength }}
+          <v-card-text class="traits">
+            <v-list>
+              <v-list-item @click="activateRollDialog('Strength', character.traits.strength)">
+                <v-list-item-title class="d-flex justify-space-between bodyText--text">
+                  <div>
+                    Strength
+                  </div>
+                  <div>
+                    {{ character.traits.strength }}
+                  </div>
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="activateRollDialog('Dexterity', character.traits.dexterity)">
+                <v-list-item-title class="d-flex justify-space-between bodyText--text">
+                  <div>
+                    Dexterity
+                  </div>
+                  <div>
+                    {{ character.traits.dexterity }}
+                  </div>
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="activateRollDialog('Relations', character.traits.relations)">
+                <v-list-item-title class="d-flex justify-space-between bodyText--text">
+                  <div>
+                    Relations
+                  </div>
+                  <div>
+                    {{ character.traits.relations }}
+                  </div>
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="activateRollDialog('Culture', character.traits.culture)">
+                <v-list-item-title class="d-flex justify-space-between bodyText--text">
+                  <div>
+                    Culture
+                  </div>
+                  <div>
+                    {{ character.traits.culture }}
+                  </div>
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="activateRollDialog('Biology', character.traits.biology)">
+                <v-list-item-title class="d-flex justify-space-between bodyText--text">
+                  <div>
+                    Biology
+                  </div>
+                  <div>
+                    {{ character.traits.biology }}
+                  </div>
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item @click="activateRollDialog('Engineering', character.traits.engineering)">
+                <v-list-item-title class="d-flex justify-space-between bodyText--text">
+                  <div>
+                    Engineering
+                  </div>
+                  <div>
+                    {{ character.traits.engineering }}
+                  </div>
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
           </v-card-text>
         </v-card>
         <v-card
-          class="character-sheet-trait tertiary--text"
+          v-show="character.languages.length"
           flat
-          @click="activateRollDialog('Dexterity', character.traits.dexterity)"
         >
-          <v-card-title>Dexterity</v-card-title>
-          <v-card-text class="tertiary--text">
-            {{ character.traits.dexterity }}
-          </v-card-text>
-        </v-card>
-        <v-card
-          class="character-sheet-trait tertiary--text"
-          flat
-          @click="activateRollDialog('Relations', character.traits.relations)"
-        >
-          <v-card-title>Relations</v-card-title>
-          <v-card-text class="tertiary--text">
-            {{ character.traits.relations }}
-          </v-card-text>
-        </v-card>
-        <v-card
-          class="character-sheet-trait tertiary--text"
-          flat
-          @click="activateRollDialog('Culture', character.traits.culture)"
-        >
-          <v-card-title>Culture</v-card-title>
-          <v-card-text class="tertiary--text">
-            {{ character.traits.culture }}
-          </v-card-text>
-        </v-card>
-        <v-card
-          class="character-sheet-trait tertiary--text"
-          flat
-          @click="activateRollDialog('Biology', character.traits.biology)"
-        >
-          <v-card-title>Biology</v-card-title>
-          <v-card-text class="tertiary--text">
-            {{ character.traits.biology }}
-          </v-card-text>
-        </v-card>
-        <v-card
-          class="character-sheet-trait tertiary--text"
-          flat
-          @click="activateRollDialog('Engineering', character.traits.engineering)"
-        >
-          <v-card-title>Engineering</v-card-title>
-          <v-card-text class="tertiary--text">
-            {{ character.traits.engineering }}
-          </v-card-text>
+          <v-card-title
+            class="primary headerText--text"
+          >
+            Languages
+          </v-card-title>
+          <v-list-item
+            v-for="(language, index) in character.languages"
+            :key="'language-' + index"
+          >
+            <v-list-item-content>
+              <v-list-item-title class="bodyText--text">
+                {{ language }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
         </v-card>
       </v-col>
       <v-col
@@ -130,6 +157,7 @@
         sm="7"
       >
         <v-card
+          class="mb-3"
           flat
         >
           <v-card-title
@@ -214,6 +242,7 @@
         </v-card>
         <v-card
           v-show="character.skills.length"
+          class="mb-3"
           flat
         >
           <v-card-title
@@ -237,30 +266,11 @@
             </v-card-text>
           </v-card>
         </v-card>
-        <v-card
-          v-show="character.languages.length"
-          flat
-        >
-          <v-card-title
-            class="primary headerText--text"
-          >
-            Languages
-          </v-card-title>
-          <v-list-item
-            v-for="(language, index) in character.languages"
-            :key="'language-' + index"
-          >
-            <v-list-item-content>
-              <v-list-item-title class="bodyText--text">
-                {{ language }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
       </v-col>
     </v-row>
     <v-card
       v-show="character.inventory"
+      class="mb-3"
       flat
     >
       <v-card-title
@@ -288,6 +298,7 @@
     </v-card>
     <v-card
       v-show="character.personality"
+      class="mb-3"
       flat
     >
       <v-card-title
@@ -538,5 +549,17 @@ export default class CharacterSheet extends Vue {
 .mdi-dice-5,
 .mdi-dice-6 {
   font-size: 3em;
+}
+
+.traits {
+  .v-list-item:hover {
+    background: #eaeaea;
+    cursor: pointer;
+    transition: ease .3s all;
+  }
+
+  .v-list-item__title {
+    font-size: 1.25rem !important;
+  }
 }
 </style>
