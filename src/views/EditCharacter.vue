@@ -40,23 +40,31 @@
           </div>
         </v-img>
       </v-col>
-      <v-col
-        cols="4"
-      >
-        <v-text-field
-          v-model="character.race"
-          label="Race"
-          @change="saveCharacter()"
-        />
-      </v-col>
-      <v-col
-        cols="8"
-      >
-        <v-text-field
-          v-model="character.name"
-          label="Name"
-          @change="saveCharacter()"
-        />
+      <v-col cols="12">
+        <v-card flat>
+          <v-card-text>
+            <v-row>
+              <v-col
+                cols="4"
+              >
+                <v-text-field
+                  v-model="character.race"
+                  label="Race"
+                  @change="saveCharacter()"
+                />
+              </v-col>
+              <v-col
+                cols="8"
+              >
+                <v-text-field
+                  v-model="character.name"
+                  label="Name"
+                  @change="saveCharacter()"
+                />
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
       </v-col>
     </v-row>
     <v-row>
