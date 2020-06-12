@@ -52,6 +52,7 @@ const organizationSettings: OrganizationSettings = {
     position: 3,
   },
 };
+const party: Character[] = [];
 
 export const store = new Vuex.Store({
   state: {
@@ -63,6 +64,7 @@ export const store = new Vuex.Store({
     campaign,
     character,
     organizationSettings,
+    party,
   },
   mutations: {
     setCurrentUser(state, val) {
@@ -79,6 +81,10 @@ export const store = new Vuex.Store({
     },
     setOrganizationSettings(state, val) {
       state.organizationSettings = val;
+    },
+    setParty(state, val) {
+      console.log('#setParty: ', val);
+      state.party = val;
     },
   },
   actions: {
@@ -162,6 +168,20 @@ export const store = new Vuex.Store({
       const settings = SettingsService.getOrganization();
       commit('setOrganizationSettings', settings);
     },
+    fetchParty({commit}) {
+      fb.charactersCollection.get()
+        .then((snapshot) => {
+          const party = snapshot.docs.map((doc) => doc.data());
+          if (party) {
+            commit('setParty', party);
+          } else {
+            commit('setParty', []);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   modules: {
   },
@@ -174,6 +194,7 @@ fb.auth.onAuthStateChanged((user: any) => {
     store.dispatch('fetchCampaign');
     store.dispatch('fetchCharacter');
     store.dispatch('fetchOrganizationSettings');
+    store.dispatch('fetchParty');
     fb.usersCollection.doc(user.uid).onSnapshot((doc) => {
       if (doc.data()) {
         store.commit('setUserProfile', doc.data());

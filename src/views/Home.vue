@@ -23,20 +23,27 @@
     >
       <campaign-notes />
     </v-col>
+    <v-col
+      sm="12"
+    >
+      <party-display />
+    </v-col>
   </v-row>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import CampaignTracker from '../components/CampaignTracker.vue';
-import CharacterSheet from '../components/CharacterSheet.vue';
-import CampaignNotes from '../components/CampaignNotes.vue';
+import CampaignTracker from '@/components/CampaignTracker.vue';
+import CharacterSheet from '@/components/CharacterSheet.vue';
+import CampaignNotes from '@/components/CampaignNotes.vue';
+import PartyDisplay from '@/components/PartyDisplay.vue';
 
 @Component({
   components: {
     CampaignTracker,
     CharacterSheet,
     CampaignNotes,
+    PartyDisplay,
   },
 })
 export default class Home extends Vue {
