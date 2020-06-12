@@ -258,7 +258,7 @@
             <v-card-title class="bodyText--text">
               {{ skill.name }}
             </v-card-title>
-            <v-card-subtitle class="bodyText--text">
+            <v-card-subtitle class="text-capitalize bodyText--text">
               {{ skill.trait }}
             </v-card-subtitle>
             <v-card-text class="bodyText--text">
