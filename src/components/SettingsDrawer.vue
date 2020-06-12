@@ -121,6 +121,30 @@
           />
         </v-list-item>
       </v-list-group>
+      <v-list-group sub-group>
+        <template v-slot:activator>
+          <v-list-item-title>
+            Party
+          </v-list-item-title>
+        </template>
+        <v-list-item>
+          <v-select
+            v-model="organizationSettings.party.size"
+            label="Size"
+            :items="sizes"
+            @change="saveOrganization"
+          />
+          <v-list-item-subtitle>Only works on larger screen sizes.</v-list-item-subtitle>
+        </v-list-item>
+        <v-list-item>
+          <v-select
+            v-model="organizationSettings.party.position"
+            label="Position"
+            :items="positions"
+            @change="saveOrganization"
+          />
+        </v-list-item>
+      </v-list-group>
       <v-list-item>
         <v-btn
           color="error"

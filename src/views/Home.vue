@@ -24,6 +24,8 @@
       <campaign-notes />
     </v-col>
     <v-col
+      :order="organizationSettings.party.position"
+      :lg="organizationSettings.party.size"
       sm="12"
     >
       <party-display />

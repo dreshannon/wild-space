@@ -58,6 +58,10 @@ export interface OrganizationSettings {
     size: number;
     position: number;
   };
+  party: {
+    size: number;
+    position: number;
+  };
 }
 
 
