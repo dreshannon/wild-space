@@ -6,7 +6,7 @@
       Party
     </v-card-title>
     <v-card-text
-      class="background d-flex flex-wrap"
+      class="background d-flex flex-wrap justify-center"
     >
       <v-card
         v-for="(member, index) in party"
