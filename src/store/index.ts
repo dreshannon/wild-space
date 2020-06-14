@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {Campaign, Character, OrganizationSettings} from '@/types';
+import {Campaign, Character, OrganizationSettings, CharacterNote} from '@/types';
 import fb from '../firebaseConfig';
 import SettingsService from '../services/settings-service';
 
@@ -57,6 +57,7 @@ const organizationSettings: OrganizationSettings = {
   },
 };
 const party: Character[] = [];
+const characterNotes: CharacterNote[] = [];
 
 export const store = new Vuex.Store({
   state: {
@@ -69,6 +70,9 @@ export const store = new Vuex.Store({
     character,
     organizationSettings,
     party,
+    characterNotes: {
+      characterNotes,
+    },
   },
   mutations: {
     setCurrentUser(state, val) {
@@ -85,6 +89,10 @@ export const store = new Vuex.Store({
     },
     setOrganizationSettings(state, val) {
       state.organizationSettings = val;
+    },
+    setCharacterNotes(state, val) {
+      console.log('#setCharacterNotes: ', val);
+      state.characterNotes = val;
     },
     setParty(state, val) {
       console.log('#setParty: ', val);
@@ -172,6 +180,14 @@ export const store = new Vuex.Store({
       const settings = SettingsService.getOrganization();
       commit('setOrganizationSettings', settings);
     },
+    fetchCharacterNotes({commit, state}) {
+      fb.characterNotesCollection.doc(state.currentUser.uid).get()
+        .then((res) => {
+          if (res.data()) {
+            commit('setCharacterNotes', res.data());
+          }
+        });
+    },
     fetchParty({commit}) {
       fb.charactersCollection.get()
         .then((snapshot) => {
@@ -198,6 +214,7 @@ fb.auth.onAuthStateChanged((user: any) => {
     store.dispatch('fetchCampaign');
     store.dispatch('fetchCharacter');
     store.dispatch('fetchOrganizationSettings');
+    store.dispatch('fetchCharacterNotes');
     store.dispatch('fetchParty');
     fb.usersCollection.doc(user.uid).onSnapshot((doc) => {
       if (doc.data()) {

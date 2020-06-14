@@ -64,8 +64,14 @@ export interface OrganizationSettings {
   };
 }
 
-
 export interface User {
   name: string;
   role: string;
+}
+
+export interface CharacterNote {
+  name: string;
+  picture: string;
+  notes: string;
+  tags: string[];
 }

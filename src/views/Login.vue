@@ -28,6 +28,8 @@
           </a>
           <v-spacer />
           <v-btn
+            class="white--text"
+            color="secondary"
             @click="login()"
           >
             Login
@@ -41,7 +43,7 @@
       <v-card
         :loading="performingRequest"
       >
-        <v-card-title>Welcome to Wild Space Campaign Tracker!</v-card-title>
+        <v-card-title>Welcome to the Wild Space Campaign Tracker!</v-card-title>
         <v-card-subtitle>Please fill in the information below to get started.</v-card-subtitle>
         <v-card-text>
           <v-text-field
@@ -70,6 +72,8 @@
           </a>
           <v-spacer />
           <v-btn
+            class="white--text"
+            color="secondary"
             @click="signup()"
           >
             Signup

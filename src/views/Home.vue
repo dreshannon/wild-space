@@ -30,6 +30,11 @@
     >
       <party-display />
     </v-col>
+    <v-col
+      sm="12"
+    >
+      <character-notes />
+    </v-col>
   </v-row>
 </template>
 
@@ -38,6 +43,7 @@ import {Component, Vue} from 'vue-property-decorator';
 import CampaignTracker from '@/components/CampaignTracker.vue';
 import CharacterSheet from '@/components/CharacterSheet.vue';
 import CampaignNotes from '@/components/CampaignNotes.vue';
+import CharacterNotes from '@/components/CharacterNotes.vue';
 import PartyDisplay from '@/components/PartyDisplay.vue';
 
 @Component({
@@ -45,6 +51,7 @@ import PartyDisplay from '@/components/PartyDisplay.vue';
     CampaignTracker,
     CharacterSheet,
     CampaignNotes,
+    CharacterNotes,
     PartyDisplay,
   },
 })
