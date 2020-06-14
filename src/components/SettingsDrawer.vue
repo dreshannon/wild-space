@@ -124,12 +124,12 @@
       <v-list-group sub-group>
         <template v-slot:activator>
           <v-list-item-title>
-            Party
+            Characters
           </v-list-item-title>
         </template>
         <v-list-item>
           <v-select
-            v-model="organizationSettings.party.size"
+            v-model="organizationSettings.characterNotes.size"
             label="Size"
             :items="sizes"
             @change="saveOrganization"
@@ -138,7 +138,7 @@
         </v-list-item>
         <v-list-item>
           <v-select
-            v-model="organizationSettings.party.position"
+            v-model="organizationSettings.characterNotes.position"
             label="Position"
             :items="positions"
             @change="saveOrganization"
@@ -306,7 +306,7 @@ export default class SettingsDrawer extends Vue {
     },
   ]
 
-  positions = [1, 2, 3];
+  positions = [1, 2, 3, 4];
 
   saveUser() {
     const user: User = {

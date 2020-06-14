@@ -58,7 +58,7 @@ export interface OrganizationSettings {
     size: number;
     position: number;
   };
-  party: {
+  characterNotes: {
     size: number;
     position: number;
   };

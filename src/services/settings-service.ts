@@ -33,9 +33,9 @@ function getOrganization() {
         size: '12',
         position: '3',
       },
-      party: {
-        size: '12',
-        position: '4',
+      characterNotes: {
+        size: 12,
+        position: 5,
       },
     };
   }

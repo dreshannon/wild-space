@@ -51,7 +51,7 @@ const organizationSettings: OrganizationSettings = {
     size: 12,
     position: 3,
   },
-  party: {
+  characterNotes: {
     size: 12,
     position: 4,
   },
