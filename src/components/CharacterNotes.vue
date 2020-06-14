@@ -24,21 +24,18 @@
       <v-card
         v-for="(note, index) in characterNotes"
         :key="`character-note-${index}`"
-        class="ma-3"
+        class="primary d-flex flex-column justify-space-between ma-3"
         @click="setNoteToEdit(note, index)"
       >
         <v-img
           class="primary align-end"
           width="200"
-          contain
+          cover
           :src="note.picture"
-        >
-          <div class="primary">
-            <v-card-title class="headerText--text">
-              {{ note.name }}
-            </v-card-title>
-          </div>
-        </v-img>
+        />
+        <v-card-title class="headerText--text">
+          {{ note.name }}
+        </v-card-title>
       </v-card>
     </v-card-text>
     <new-character-note-modal

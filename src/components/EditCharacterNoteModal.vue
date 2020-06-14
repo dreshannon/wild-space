@@ -18,7 +18,7 @@
       </v-alert>
       <v-card-text>
         <v-row>
-          <v-col>
+          <v-col cols="6">
             <v-img
               width="100%"
               contain
@@ -28,8 +28,9 @@
                 <v-btn
                   fab
                   color="secondary"
+                  @click="showSelectPictureModal = true"
                 >
-                  <v-icon>mdi-plus</v-icon>
+                  <v-icon>mdi-pencil-outline</v-icon>
                 </v-btn>
               </div>
             </v-img>
@@ -51,7 +52,7 @@
                 class="mx-1"
                 close
                 color="secondary"
-                @click:close="removeCharacterTag(characterNote, index)"
+                @click:close="removeTag(index)"
               >
                 {{ tag }}
               </v-chip>
@@ -63,7 +64,7 @@
               filled
               class="primary mt-1"
               placeholder="New tag"
-              @keyup.enter="addCharacterTag(characterNote, newTag)"
+              @keyup.enter="addTag(newTag)"
             />
           </v-col>
         </v-row>
@@ -83,6 +84,11 @@
         </v-btn>
       </v-card-actions>
     </v-card>
+    <select-picture-modal
+      :show-modal="showSelectPictureModal"
+      :toggle-modal="toggleSelectPictureModal"
+      :set-picture="setNotePicture"
+    />
   </v-dialog>
 </template>
 
@@ -90,16 +96,18 @@
 import {Component, Vue, Prop} from 'vue-property-decorator';
 import {CharacterNote} from '../types';
 import fb from '../firebaseConfig';
+import SelectPictureModal from '@/components/SelectPictureModal.vue';
 
-@Component
+@Component({
+  components: {
+    SelectPictureModal,
+  },
+})
 export default class EditCharacterNoteModal extends Vue {
   @Prop() characterNote!: CharacterNote;
   @Prop() showModal!: boolean;
   @Prop() toggleModal!: any;
   @Prop() index!: number;
-
-  newTag = '';
-  modalError = '';
 
   get showEditCharacterModal(): boolean {
     return this.showModal;
@@ -109,6 +117,22 @@ export default class EditCharacterNoteModal extends Vue {
   }
   get characterNotes() {
     return this.$store.state.characterNotes.characterNotes;
+  }
+
+  newTag = '';
+  modalError = '';
+  showSelectPictureModal = false;
+
+  toggleSelectPictureModal(show: boolean) {
+    if (show != undefined) {
+      this.showSelectPictureModal = show;
+    } else {
+      this.showSelectPictureModal = !this.showSelectPictureModal;
+    }
+  }
+
+  setNotePicture(picture: string) {
+    this.characterNote.picture = picture;
   }
 
   addTag() {

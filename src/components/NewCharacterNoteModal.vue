@@ -28,6 +28,7 @@
                 <v-btn
                   fab
                   color="secondary"
+                  @click="showSelectPictureModal = true"
                 >
                   <v-icon>mdi-plus</v-icon>
                 </v-btn>
@@ -78,27 +79,28 @@
         </v-btn>
       </v-card-actions>
     </v-card>
+    <select-picture-modal
+      :show-modal="showSelectPictureModal"
+      :toggle-modal="toggleSelectPictureModal"
+      :set-picture="setNotePicture"
+    />
   </v-dialog>
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop} from 'vue-property-decorator';
+import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
 import {CharacterNote} from '../types';
 import fb from '../firebaseConfig';
+import SelectPictureModal from '@/components/SelectPictureModal.vue';
 
-@Component
+@Component({
+  components: {
+    SelectPictureModal,
+  },
+})
 export default class NewCharacterNoteModal extends Vue {
   @Prop() showModal!: boolean;
   @Prop() toggleModal!: any;
-
-  characterNote: CharacterNote = {
-    name: '',
-    picture: '',
-    notes: '',
-    tags: [],
-  };
-  newTag = '';
-  modalError = '';
 
   get showNewCharacterModal(): boolean {
     return this.showModal;
@@ -110,6 +112,28 @@ export default class NewCharacterNoteModal extends Vue {
 
   get characterNotes() {
     return this.$store.state.characterNotes.characterNotes;
+  }
+
+  characterNote: CharacterNote = {
+    name: '',
+    picture: '',
+    notes: '',
+    tags: [],
+  };
+  newTag = '';
+  modalError = '';
+  showSelectPictureModal = false;
+
+  toggleSelectPictureModal(show: boolean) {
+    if (show != undefined) {
+      this.showSelectPictureModal = show;
+    } else {
+      this.showSelectPictureModal = !this.showSelectPictureModal;
+    }
+  }
+
+  setNotePicture(picture: string) {
+    this.characterNote.picture = picture;
   }
 
   addTag() {
@@ -142,6 +166,16 @@ export default class NewCharacterNoteModal extends Vue {
       this.showNewCharacterModal = false;
     } else {
       this.modalError = 'Please add a name for this character.';
+    }
+  }
+
+  @Watch('showNewCharacterModal')
+  resetCharacterData(val: boolean) {
+    if (!val) {
+      this.characterNote.name = '';
+      this.characterNote.notes = '';
+      this.characterNote.tags = [];
+      this.characterNote.picture = '';
     }
   }
 }
