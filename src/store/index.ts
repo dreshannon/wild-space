@@ -56,7 +56,6 @@ const organizationSettings: OrganizationSettings = {
     position: 4,
   },
 };
-const party: Character[] = [];
 const characterNotes: CharacterNote[] = [];
 
 export const store = new Vuex.Store({
@@ -69,7 +68,6 @@ export const store = new Vuex.Store({
     campaign,
     character,
     organizationSettings,
-    party,
     characterNotes: {
       characterNotes,
     },
@@ -188,20 +186,6 @@ export const store = new Vuex.Store({
           }
         });
     },
-    fetchParty({commit}) {
-      fb.charactersCollection.get()
-        .then((snapshot) => {
-          const party = snapshot.docs.map((doc) => doc.data());
-          if (party) {
-            commit('setParty', party);
-          } else {
-            commit('setParty', []);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
   },
   modules: {
   },
@@ -215,7 +199,6 @@ fb.auth.onAuthStateChanged((user: any) => {
     store.dispatch('fetchCharacter');
     store.dispatch('fetchOrganizationSettings');
     store.dispatch('fetchCharacterNotes');
-    store.dispatch('fetchParty');
     fb.usersCollection.doc(user.uid).onSnapshot((doc) => {
       if (doc.data()) {
         store.commit('setUserProfile', doc.data());
