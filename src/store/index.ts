@@ -89,12 +89,7 @@ export const store = new Vuex.Store({
       state.organizationSettings = val;
     },
     setCharacterNotes(state, val) {
-      console.log('#setCharacterNotes: ', val);
       state.characterNotes = val;
-    },
-    setParty(state, val) {
-      console.log('#setParty: ', val);
-      state.party = val;
     },
   },
   actions: {
