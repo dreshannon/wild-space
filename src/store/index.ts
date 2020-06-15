@@ -72,6 +72,28 @@ export const store = new Vuex.Store({
       characterNotes,
     },
   },
+  getters: {
+    tags(state) {
+      const tags = new Set();
+      state.characterNotes.characterNotes.map((note) => {
+        note.tags.map((tag) => {
+          tags.add(tag);
+        });
+      });
+      return ['All', ...tags];
+    },
+    characterNotes(state) {
+      return (tag: string) => {
+        if (tag == 'All') {
+          return state.characterNotes.characterNotes;
+        } else {
+          return state.characterNotes.characterNotes.filter((note) => {
+            return note.tags.includes(tag);
+          });
+        }
+      };
+    },
+  },
   mutations: {
     setCurrentUser(state, val) {
       state.currentUser = val;
