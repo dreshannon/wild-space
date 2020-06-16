@@ -11,6 +11,15 @@
       class="mx-1"
       color="secondary"
       text
+      href="https://sites.google.com/view/wildspace/home?authuser=0"
+      target="_blank"
+    >
+      <v-icon>mdi-information</v-icon> Codex
+    </v-btn>
+    <v-btn
+      class="mx-1"
+      color="secondary"
+      text
       @click="toggleSettings"
     >
       <v-icon>mdi-cog</v-icon> Settings
