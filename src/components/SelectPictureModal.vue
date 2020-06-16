@@ -31,7 +31,7 @@
           @click="selectPicture(picture)"
         >
           <v-img
-            contain
+            cover
             width="200"
             height="300"
             :src="picture"
