@@ -246,7 +246,7 @@
           flat
         >
           <v-card-title
-            class="primary white--text"
+            class="primary headerText--text"
           >
             Skills
           </v-card-title>
