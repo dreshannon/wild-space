@@ -295,6 +295,15 @@
           Save
         </v-btn>
       </v-card-actions>
+      <v-snackbar
+        v-model="snackbarSettings.show"
+        :color="snackbarSettings.color"
+        :timeout="snackbarSettings.timout"
+      >
+        <div class="headerText--text">
+          {{ snackbarSettings.message }}
+        </div>
+      </v-snackbar>
     </v-card>
     <v-card
       v-show="character.personality"
@@ -425,6 +434,12 @@ export default class CharacterSheet extends Vue {
     trait: '',
     value: 0,
   };
+  snackbarSettings = {
+    show: false,
+    timeout: 2000,
+    message: '',
+    color: 'primary',
+  };
 
   @Watch('showRollDialog')
   resetRollsVars() {
@@ -499,7 +514,12 @@ export default class CharacterSheet extends Vue {
   updateInventory() {
     fb.charactersCollection.doc(this.$store.state.currentUser.uid).update({
       inventory: this.character.inventory,
-    });
+    })
+      .then(() => {
+        this.snackbarSettings.message = 'Inventory saved.';
+        this.snackbarSettings.color = 'primary';
+        this.snackbarSettings.show = true;
+      });
   }
 
   saveCharacter() {
