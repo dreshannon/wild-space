@@ -5,10 +5,20 @@
   >
     <v-card>
       <v-card-title
-        class="primary"
+        class="primary headerText--text d-flex justify-space-between"
       >
-        Edit Character Note
+        Edit Character Note<v-btn
+          icon
+          @click="showEditCharacterModal = false"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </v-card-title>
+      <v-card-subtitle
+        class="primary headerText--text"
+      >
+        <strong>Click the plus button</strong> to set a picture from the database.
+      </v-card-subtitle>
       <v-alert
         v-if="modalError"
         type="error"

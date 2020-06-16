@@ -5,10 +5,21 @@
   >
     <v-card>
       <v-card-title
-        class="primary"
+        class="primary headerText--text d-flex justify-space-between"
       >
         New Character Note
+        <v-btn
+          icon
+          @click="showNewCharacterModal = false"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </v-card-title>
+      <v-card-subtitle
+        class="primary headerText--text"
+      >
+        <strong>Click the plus button</strong> to set a picture from the database.
+      </v-card-subtitle>
       <v-alert
         v-if="modalError"
         type="error"
@@ -123,7 +134,6 @@ export default class NewCharacterNoteModal extends Vue {
   newTag = '';
   modalError = '';
   showSelectPictureModal = false;
-
   toggleSelectPictureModal(show: boolean) {
     if (show != undefined) {
       this.showSelectPictureModal = show;
