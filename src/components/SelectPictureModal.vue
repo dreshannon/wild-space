@@ -4,9 +4,22 @@
     width="80%"
   >
     <v-card>
-      <v-card-title class="primary headerText--text">
+      <v-card-title class="primary headerText--text d-flex justify-space-between">
         Select Picture
+        <v-btn
+          icon
+          @click="showSelectPictureModal = false"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </v-card-title>
+      <v-alert
+        v-if="modalError"
+        type="error"
+        tile
+      >
+        {{ modalError }}
+      </v-alert>
       <v-card-text
         v-if="pictures.length"
         class="d-flex flex-wrap justify-center"
@@ -62,6 +75,7 @@ export default class SelectPictureModal extends Vue {
 
   pictures: string[] = [];
   selectedPicture = '';
+  modalError = '';
 
   get showSelectPictureModal() {
     return this.showModal;
@@ -83,6 +97,8 @@ export default class SelectPictureModal extends Vue {
         })
         .catch((error) => {
           console.log(error);
+          this.modalError = 'Failed to retrieve pictures to select. Please notify\n' +
+            'Please contact Dre#3260 on Discord to resolve this issue.';
         });
     }
   }
