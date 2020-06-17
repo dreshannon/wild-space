@@ -102,6 +102,15 @@
         </v-form>
       </v-sheet>
     </v-bottom-sheet>
+    <v-snackbar
+      v-model="snackbarSettings.show"
+      :color="snackbarSettings.color"
+      :timeout="snackbarSettings.timout"
+    >
+      <div class="headerText--text">
+        {{ snackbarSettings.message }}
+      </div>
+    </v-snackbar>
   </v-card>
 </template>
 
@@ -128,6 +137,12 @@ export default class CampaignTracker extends Vue {
     description: '',
   };
   activeEventIndex: number | undefined = undefined;
+  snackbarSettings = {
+    show: false,
+    timeout: 2000,
+    message: '',
+    color: 'primary',
+  };
 
   editEvent(event: Event, index: number) {
     this.activeEvent = event;
@@ -141,7 +156,12 @@ export default class CampaignTracker extends Vue {
       name: 'Wild Space',
       events: campaign.events,
       notes: campaign.notes,
-    });
+    })
+      .then(() => {
+        this.snackbarSettings.message = 'Edited event saved.';
+        this.snackbarSettings.color = 'primary';
+        this.snackbarSettings.show = true;
+      });
     this.showEditEventForm = false;
   }
 
@@ -156,7 +176,12 @@ export default class CampaignTracker extends Vue {
         name: 'Wild Space',
         events: campaign.events,
         notes: campaign.notes,
-      });
+      })
+        .then(() => {
+          this.snackbarSettings.message = 'Added new event.';
+          this.snackbarSettings.color = 'primary';
+          this.snackbarSettings.show = true;
+        });
       this.newEvent.title = '';
       this.newEvent.description = '';
       this.showNewEventForm = false;
@@ -171,7 +196,12 @@ export default class CampaignTracker extends Vue {
         name: 'Wild Space',
         events: campaign.events,
         notes: campaign.notes,
-      });
+      })
+        .then(() => {
+          this.snackbarSettings.message = 'Deleted event.';
+          this.snackbarSettings.color = 'primary';
+          this.snackbarSettings.show = true;
+        });
       this.showEditEventForm = false;
       this.activeEvent = {
         title: '',
