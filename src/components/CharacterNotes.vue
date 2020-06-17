@@ -30,7 +30,7 @@
       />
     </v-card-subtitle>
     <v-card-text
-      class="background d-flex flex-wrap "
+      class="background d-flex flex-wrap justify-center justify-lg-start"
     >
       <div
         v-for="(note, index) in characterNotes"
