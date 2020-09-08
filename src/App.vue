@@ -19,7 +19,6 @@
 import {Component, Vue} from 'vue-property-decorator';
 import Navigation from './components/Navigation.vue';
 import SettingsDrawer from './components/SettingsDrawer.vue';
-import SettingsService from './services/settings-service';
 
 @Component({
   components: {
@@ -36,10 +35,6 @@ export default class App extends Vue {
     } else {
       this.showSettings = !this.showSettings;
     }
-  }
-
-  created() {
-    this.$vuetify.theme.themes.light = SettingsService.getTheme();
   }
 }
 </script>
