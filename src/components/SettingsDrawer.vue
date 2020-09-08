@@ -169,7 +169,7 @@
             <h3>Primary</h3>
           </v-list-item-title>
           <v-color-picker
-            v-model="$vuetify.theme.themes.light.primary"
+            v-model="themeSettings.primary"
             @update:color="saveTheme"
           />
         </v-list-item-content>
@@ -182,7 +182,7 @@
             <h3>Secondary</h3>
           </v-list-item-title>
           <v-color-picker
-            v-model="$vuetify.theme.themes.light.secondary"
+            v-model="themeSettings.secondary"
             @update:color="saveTheme"
           />
         </v-list-item-content>
@@ -195,7 +195,7 @@
             <h3>Background</h3>
           </v-list-item-title>
           <v-color-picker
-            v-model="$vuetify.theme.themes.light.background"
+            v-model="themeSettings.background"
             @update:color="saveTheme"
           />
         </v-list-item-content>
@@ -208,7 +208,7 @@
             <h3>Header Text</h3>
           </v-list-item-title>
           <v-color-picker
-            v-model="$vuetify.theme.themes.light.headerText"
+            v-model="themeSettings.headerText"
             @update:color="saveTheme"
           />
         </v-list-item-content>
@@ -221,7 +221,7 @@
             <h3>Body Text</h3>
           </v-list-item-title>
           <v-color-picker
-            v-model="$vuetify.theme.themes.light.bodyText"
+            v-model="themeSettings.bodyText"
             @update:color="saveTheme"
           />
         </v-list-item-content>
@@ -256,6 +256,7 @@
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import SettingsService from '../services/settings-service';
 import {User} from '@/types';
+import fb from '@/firebaseConfig';
 
 @Component
 export default class SettingsDrawer extends Vue {
@@ -272,6 +273,10 @@ export default class SettingsDrawer extends Vue {
 
   get organizationSettings() {
     return this.$store.state.organizationSettings;
+  }
+
+  get themeSettings() {
+    return this.$store.state.theme;
   }
 
   get userProfile() {
@@ -306,7 +311,7 @@ export default class SettingsDrawer extends Vue {
     },
   ]
 
-  positions = [1, 2, 3, 4];
+  positions = [1, 2, 3, 4, 5];
 
   saveUser() {
     const user: User = {
@@ -327,32 +332,29 @@ export default class SettingsDrawer extends Vue {
   }
 
   saveOrganization() {
-    SettingsService.setOrganization(this.organizationSettings);
-  }
-
-  saveTheme() {
-    SettingsService.setTheme({
-      primary: this.$vuetify.theme.themes.light.primary,
-      secondary: this.$vuetify.theme.themes.light.secondary,
-      background: this.$vuetify.theme.themes.light.background,
-      headerText: this.$vuetify.theme.themes.light.headerText,
-      bodyText: this.$vuetify.theme.themes.light.bodyText,
-      accent: '#560D55',
-      error: '#960200',
-      info: '#8C8CF2',
-      success: '#DDABF8',
-      warning: '#A66102',
+    fb.settingsCollections.doc(this.$store.state.currentUser.uid).update({
+      organization: this.organizationSettings,
     });
   }
 
+  saveTheme() {
+    fb.settingsCollections.doc(this.$store.state.currentUser.uid).update({
+      theme: this.themeSettings,
+    });
+    this.$vuetify.theme.themes.light = this.themeSettings;
+  }
+
   resetOrganization() {
-    SettingsService.resetOrganization();
-    this.$store.dispatch('fetchOrganizationSettings');
+    const organization = SettingsService.getDefaultOrganization();
+    fb.settingsCollections.doc(this.$store.state.currentUser.uid).update({
+      organization: {...organization},
+    });
+    this.$store.commit('setOrganizationSettings', organization);
   }
 
   resetTheme() {
-    SettingsService.resetTheme();
-    this.$vuetify.theme.themes.light = SettingsService.getTheme();
+    this.$store.commit('updateThemeSettings', SettingsService.getDefaultTheme());
+    this.$vuetify.theme.themes.light = SettingsService.getDefaultTheme();
   }
 }
 </script>
