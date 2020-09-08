@@ -1,6 +1,4 @@
 import CookieService from './cookie-service';
-import {customTheme} from '../theme';
-import cookieService from './cookie-service';
 import fb from '@/firebaseConfig';
 import {User, OrganizationSettings} from '@/types';
 
