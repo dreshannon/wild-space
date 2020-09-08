@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-title
-      class="primary d-flex justify-space-between"
+      class="primary headerText--text d-flex justify-space-between"
     >
       Characters
       <v-btn
@@ -14,7 +14,7 @@
       </v-btn>
     </v-card-title>
     <v-card-subtitle
-      class="secondary headerText--text pb-0"
+      class="primary headerText--text pb-0"
     >
       To add a character, <strong>click the plus on the right</strong>.
       To view/edit information on a character, <strong>click the corresponding card.</strong>
