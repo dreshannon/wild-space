@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Vuetify from '@/plugins/vuetify';
 import {Campaign, Character, OrganizationSettings, CharacterNote} from '@/types';
 import fb from '../firebaseConfig';
 import SettingsService from '../services/settings-service';
@@ -71,6 +72,18 @@ export const store = new Vuex.Store({
     characterNotes: {
       characterNotes,
     },
+    theme: {
+      primary: '#210E39',
+      secondary: '#53208a',
+      background: '#FEFFFE',
+      headerText: '#FEFFFE',
+      bodyText: '#210E39',
+      accent: '#560D55',
+      error: '#960200',
+      info: '#8C8CF2',
+      success: '#DDABF8',
+      warning: '#A66102',
+    },
   },
   getters: {
     tags(state) {
@@ -112,6 +125,9 @@ export const store = new Vuex.Store({
     },
     setCharacterNotes(state, val) {
       state.characterNotes = val;
+    },
+    setThemeSettings(state, val) {
+      state.theme = val;
     },
   },
   actions: {
@@ -191,9 +207,29 @@ export const store = new Vuex.Store({
           console.log(err);
         });
     },
-    fetchOrganizationSettings({commit}) {
-      const settings = SettingsService.getOrganization();
-      commit('setOrganizationSettings', settings);
+    async fetchOrganizationSettings({commit, state}) {
+      const response = await fb.settingsCollections.doc(state.currentUser.uid).get();
+      if (response.data()) {
+        commit('setOrganizationSettings', response.data()?.organization);
+      }
+    },
+    async updateThemeSettings({state}, data) {
+      const theme = data;
+
+      try {
+        Vuetify.framework.theme.themes.light = theme;
+        await fb.settingsCollections.doc(state.currentUser.uid).update({
+          theme,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchThemeSettings({commit, state}) {
+      const response = await fb.settingsCollections.doc(state.currentUser.uid).get();
+      if (response.data()) {
+        commit('setThemeSettings', response.data()?.theme);
+      }
     },
     fetchCharacterNotes({commit, state}) {
       fb.characterNotesCollection.doc(state.currentUser.uid).get()
@@ -214,11 +250,28 @@ fb.auth.onAuthStateChanged((user: any) => {
     store.dispatch('fetchUserProfile');
     store.dispatch('fetchCampaign');
     store.dispatch('fetchCharacter');
-    store.dispatch('fetchOrganizationSettings');
     store.dispatch('fetchCharacterNotes');
+    store.dispatch('fetchOrganizationSettings');
     fb.usersCollection.doc(user.uid).onSnapshot((doc) => {
       if (doc.data()) {
         store.commit('setUserProfile', doc.data());
+      }
+    });
+    fb.settingsCollections.doc(user.uid).onSnapshot((doc) => {
+      if (doc.data()) {
+        store.commit('setOrganizationSettings', doc.data()?.organization);
+        store.commit('setThemeSettings', doc.data()?.theme);
+        Vuetify.framework.theme.themes.light = doc.data()?.theme;
+      } else {
+        const organization = SettingsService.getDefaultOrganization();
+        const theme = SettingsService.getDefaultTheme();
+        fb.settingsCollections.doc(store.state.currentUser.uid).set({
+          organization: {...organization},
+          theme,
+        });
+        store.commit('setOrganizationSettings', organization);
+        store.commit('setThemeSettings', theme);
+        Vuetify.framework.theme.themes.light = theme;
       }
     });
   }
